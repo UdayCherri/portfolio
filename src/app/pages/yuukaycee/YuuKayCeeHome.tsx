@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
 import { yuukayceeProjects } from "../../data/content";
 import { useIsDesktop, useIsMd } from "../../components/shared/useMediaQuery";
+import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 
 function ProfileArea() {
   return (
@@ -17,10 +18,22 @@ function ProfileArea() {
         flexShrink: 0,
       }}
     >
+      <ImageWithFallback
+        src="/assets/images/ykc.jpg"
+        alt="YuuKayCee Profile"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
       {/* Geometric composition */}
       <svg
         viewBox="0 0 480 600"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.4 }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.4, zIndex: 2 }}
       >
         <circle cx="240" cy="240" r="180" fill="none" stroke="#A78BFA" strokeWidth="0.5" />
         <circle cx="240" cy="240" r="140" fill="none" stroke="#67E8F9" strokeWidth="0.3" />
@@ -39,6 +52,7 @@ function ProfileArea() {
           right: 0,
           height: "60%",
           background: "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.15) 0%, transparent 70%)",
+          zIndex: 2,
         }}
       />
       <div
@@ -49,6 +63,7 @@ function ProfileArea() {
           right: 0,
           height: "40%",
           background: "linear-gradient(to top, rgba(12,10,21,1) 0%, transparent 100%)",
+          zIndex: 2,
         }}
       />
 
@@ -59,6 +74,7 @@ function ProfileArea() {
           bottom: "2rem",
           left: "2rem",
           right: "2rem",
+          zIndex: 3,
         }}
       >
         <p

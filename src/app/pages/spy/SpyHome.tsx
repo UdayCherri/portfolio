@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { ArrowRight, Terminal } from "lucide-react";
 import { spyProjects } from "../../data/content";
 import { useIsDesktop } from "../../components/shared/useMediaQuery";
+import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 
 function ProfileArea() {
   return (
@@ -18,6 +19,18 @@ function ProfileArea() {
         flexShrink: 0,
       }}
     >
+      <ImageWithFallback
+        src="/assets/images/sdv.png"
+        alt="Spy D. Veloper Profile"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
       {/* Grid pattern */}
       <div
         style={{
@@ -26,12 +39,13 @@ function ProfileArea() {
           backgroundImage:
             "linear-gradient(rgba(204,18,52,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(204,18,52,0.06) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
+          zIndex: 2,
         }}
       />
       {/* Geometric marks */}
       <svg
         viewBox="0 0 460 575"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 3 }}
       >
         <rect x="100" y="100" width="260" height="375" fill="none" stroke="rgba(204,18,52,0.2)" strokeWidth="1" />
         <rect x="120" y="120" width="220" height="335" fill="none" stroke="rgba(240,238,229,0.04)" strokeWidth="1" />

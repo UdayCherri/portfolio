@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { ArrowRight, Shield } from "lucide-react";
 import { cyberResearch, securityProjects } from "../../data/content";
 import { useIsDesktop, useIsMd } from "../../components/shared/useMediaQuery";
+import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
 
 function ProfileArea() {
   return (
@@ -18,17 +19,30 @@ function ProfileArea() {
         flexShrink: 0,
       }}
     >
+      <ImageWithFallback
+        src="/assets/images/cb.png"
+        alt="CYB3R-BO1 Profile"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
       {/* Scan lines */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(16,185,129,0.03) 3px, rgba(16,185,129,0.03) 4px)",
+          zIndex: 2,
         }}
       />
 
       {/* Geometric */}
-      <svg viewBox="0 0 460 575" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.3 }}>
+      <svg viewBox="0 0 460 575" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.3, zIndex: 3 }}>
         <rect x="80" y="80" width="300" height="415" fill="none" stroke="rgba(16,185,129,0.3)" strokeWidth="0.5" strokeDasharray="4 4" />
         <rect x="110" y="110" width="240" height="355" fill="none" stroke="rgba(16,185,129,0.15)" strokeWidth="0.5" />
         <circle cx="230" cy="287" r="120" fill="none" stroke="rgba(45,212,191,0.2)" strokeWidth="0.5" strokeDasharray="3 5" />
@@ -46,11 +60,12 @@ function ProfileArea() {
           position: "absolute",
           inset: 0,
           background: "linear-gradient(to top, rgba(15,19,24,1) 0%, transparent 50%)",
+          zIndex: 3,
         }}
       />
 
       {/* Terminal-style info */}
-      <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem" }}>
+      <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", zIndex: 4 }}>
         <p
           style={{
             fontFamily: "'IBM Plex Mono', monospace",
@@ -79,6 +94,7 @@ function ProfileArea() {
           bottom: "2rem",
           left: "2rem",
           right: "2rem",
+          zIndex: 4,
         }}
       >
         <p
