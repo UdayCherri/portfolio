@@ -1,9 +1,11 @@
 import { motion } from "motion/react";
 import { journeyMilestones } from "../../data/content";
 import { useIsMd } from "../shared/useMediaQuery";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 const disciplineColors: Record<string, string> = {
-  design: "#A78BFA",
+  design: "#67E8F9",
   development: "#CC1234",
   security: "#10B981",
   core: "#B8A46A",
@@ -18,13 +20,16 @@ const disciplineLabels: Record<string, string> = {
 
 export function JourneyTimeline() {
   const isMd = useIsMd();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
 
   return (
     <section
       style={{
         padding: "8rem clamp(2rem, 8vw, 8rem)",
-        background: "#F0EDE5",
-        borderTop: "1px solid rgba(28,28,28,0.08)",
+        background: theme.bgSubtle,
+        borderTop: `1px solid ${theme.borderSubtle}`,
+        transition: "background 0.4s ease",
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -50,7 +55,7 @@ export function JourneyTimeline() {
                 fontSize: "0.65rem",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "#B8A46A",
+                color: theme.accent,
                 marginBottom: "1rem",
               }}
             >
@@ -65,7 +70,7 @@ export function JourneyTimeline() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2rem, 3.5vw, 3rem)",
                 fontWeight: 300,
-                color: "#1C1C1C",
+                color: theme.fg,
                 lineHeight: 1.15,
               }}
             >
@@ -102,7 +107,7 @@ export function JourneyTimeline() {
                     fontSize: "0.6rem",
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "#6B6B6B",
+                    color: theme.fgMuted,
                   }}
                 >
                   {label}
@@ -136,8 +141,8 @@ export function JourneyTimeline() {
                 alignItems: "center",
                 gap: "1.25rem",
                 padding: "1.5rem 0",
-                borderBottom: "1px solid rgba(28,28,28,0.07)",
-                borderRight: isMd && i % 2 === 0 ? "1px solid rgba(28,28,28,0.07)" : "none",
+                borderBottom: `1px solid ${theme.borderSubtle}`,
+                borderRight: isMd && i % 2 === 0 ? `1px solid ${theme.borderSubtle}` : "none",
                 paddingRight: isMd && i % 2 === 0 ? "3rem" : "0",
                 paddingLeft: isMd && i % 2 !== 0 ? "3rem" : "0",
               }}
@@ -160,7 +165,8 @@ export function JourneyTimeline() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.1rem",
                   fontWeight: 300,
-                  color: "rgba(28,28,28,0.3)",
+                  color: theme.fgMuted,
+                  opacity: 0.6,
                   width: "3rem",
                   lineHeight: 1,
                 }}
@@ -175,7 +181,7 @@ export function JourneyTimeline() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "1.15rem",
                   fontWeight: 400,
-                  color: "#1C1C1C",
+                  color: theme.fg,
                   lineHeight: 1.3,
                 }}
               >

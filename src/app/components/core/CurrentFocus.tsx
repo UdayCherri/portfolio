@@ -1,16 +1,21 @@
 import { motion } from "motion/react";
 import { currentFocus } from "../../data/content";
 import { useIsMd } from "../shared/useMediaQuery";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export function CurrentFocus() {
   const isMd = useIsMd();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
 
   return (
     <section
       style={{
         padding: "8rem clamp(2rem, 8vw, 8rem)",
-        background: "#F7F4EE",
-        borderTop: "1px solid rgba(28,28,28,0.08)",
+        background: theme.bg,
+        borderTop: `1px solid ${theme.borderSubtle}`,
+        transition: "background 0.4s ease",
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -23,7 +28,7 @@ export function CurrentFocus() {
             alignItems: "start",
           }}
         >
-          <div style={{ position: "sticky", top: "8rem" }}>
+          <div style={{ position: isMd ? "sticky" : "static", top: "8rem" }}>
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -34,7 +39,7 @@ export function CurrentFocus() {
                 fontSize: "0.65rem",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "#B8A46A",
+                color: theme.accent,
                 marginBottom: "1rem",
               }}
             >
@@ -49,7 +54,7 @@ export function CurrentFocus() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2rem, 3vw, 2.8rem)",
                 fontWeight: 300,
-                color: "#1C1C1C",
+                color: theme.fg,
                 lineHeight: 1.15,
                 marginBottom: "1.5rem",
               }}
@@ -63,9 +68,9 @@ export function CurrentFocus() {
               transition={{ duration: 0.6, delay: 0.2 }}
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: "0.85rem",
+                fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
                 lineHeight: 1.7,
-                color: "#6B6B6B",
+                color: theme.fgMuted,
                 maxWidth: "260px",
               }}
             >
@@ -87,7 +92,7 @@ export function CurrentFocus() {
                   alignItems: "center",
                   justifyContent: "space-between",
                   padding: "1.75rem 0",
-                  borderBottom: "1px solid rgba(28,28,28,0.08)",
+                  borderBottom: `1px solid ${theme.borderSubtle}`,
                   gap: "1rem",
                 }}
               >
@@ -108,11 +113,11 @@ export function CurrentFocus() {
                       fontFamily: "'Cormorant Garamond', serif",
                       fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
                       fontWeight: 400,
-                      color: "#1C1C1C",
+                      color: theme.fg,
                       lineHeight: 1.2,
                       overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
+                      textOverflow: isMd ? "ellipsis" : "unset",
+                      whiteSpace: isMd ? "nowrap" : "normal",
                     }}
                   >
                     {item.name}
@@ -134,7 +139,7 @@ export function CurrentFocus() {
                       fontSize: "0.6rem",
                       letterSpacing: "0.2em",
                       textTransform: "uppercase",
-                      color: "#6B6B6B",
+                      color: theme.fgMuted,
                     }}
                   >
                     {item.category}
@@ -147,7 +152,7 @@ export function CurrentFocus() {
                       alignItems: "center",
                       gap: "0.4rem",
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
                       padding: "0.25rem 0.65rem",

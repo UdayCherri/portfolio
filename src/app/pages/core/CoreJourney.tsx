@@ -1,16 +1,21 @@
 import { CoreNav } from "../../components/core/CoreNav";
 import { JourneyTimeline } from "../../components/core/JourneyTimeline";
 import { motion } from "motion/react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function CoreJourney() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
+
   return (
-    <div style={{ background: "#F7F4EE", minHeight: "100vh" }}>
+    <div style={{ background: theme.bg, minHeight: "100vh", transition: "background 0.4s ease, color 0.4s ease" }}>
       <CoreNav />
       <div style={{ paddingTop: "100px" }}>
         <div
           style={{
             padding: "6rem clamp(2rem, 8vw, 8rem) 0",
-            borderBottom: "1px solid rgba(28,28,28,0.08)",
+            borderBottom: `1px solid ${theme.borderSubtle}`,
           }}
         >
           <motion.p
@@ -22,7 +27,7 @@ export default function CoreJourney() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#B8A46A",
+              color: theme.accent,
               marginBottom: "1rem",
             }}
           >
@@ -36,7 +41,7 @@ export default function CoreJourney() {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(3rem, 6vw, 5rem)",
               fontWeight: 300,
-              color: "#1C1C1C",
+              color: theme.fg,
               lineHeight: 1.1,
               maxWidth: "600px",
             }}

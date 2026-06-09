@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { yuukayceeProjects, spyProjects, cyberResearch, securityProjects } from "../../data/content";
 import type { Project } from "../../data/content";
+import { useIsDesktop } from "../../components/shared/useMediaQuery";
 
 const allProjects: Project[] = [
   ...yuukayceeProjects,
@@ -45,11 +46,11 @@ const allProjects: Project[] = [
 
 const identityThemes = {
   yuukaycee: {
-    bg: "#0C0A15",
-    fg: "#EEE9F8",
-    accent: "#A78BFA",
-    muted: "rgba(238,233,248,0.45)",
-    border: "rgba(167,139,250,0.1)",
+    bg: "#080A12",
+    fg: "#F0EEF8",
+    accent: "#67E8F9",
+    muted: "rgba(240,238,248,0.45)",
+    border: "rgba(103,232,249,0.1)",
     headlineFont: "'Playfair Display', serif",
     bodyFont: "'DM Sans', sans-serif",
     monoFont: "'DM Sans', sans-serif",
@@ -97,6 +98,7 @@ const identityThemes = {
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isDesktop = useIsDesktop();
 
   const project = allProjects.find((p) => p.id === id);
 
@@ -336,11 +338,10 @@ export default function ProjectPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "200px 1fr",
+              gridTemplateColumns: isDesktop ? "200px 1fr" : "1fr",
               gap: "4rem",
               alignItems: "start",
             }}
-            className="grid-cols-1 lg:grid-cols-[200px_1fr]"
           >
             <p
               style={{
@@ -376,11 +377,10 @@ export default function ProjectPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "200px 1fr",
+              gridTemplateColumns: isDesktop ? "200px 1fr" : "1fr",
               gap: "4rem",
               alignItems: "start",
             }}
-            className="grid-cols-1 lg:grid-cols-[200px_1fr]"
           >
             <p
               style={{
@@ -428,44 +428,76 @@ export default function ProjectPage() {
           >
             Process
           </motion.p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             {project.process.map((step, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -12 }}
+                initial={{ opacity: 0, x: -8 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
                 style={{
                   display: "flex",
-                  gap: "2rem",
+                  gap: "1.75rem",
                   alignItems: "flex-start",
-                  padding: "1.25rem 0",
-                  borderBottom: `1px solid ${theme.border}`,
+                  position: "relative",
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: theme.monoFont,
-                    fontSize: "0.65rem",
-                    color: theme.accent,
-                    opacity: 0.5,
-                    flexShrink: 0,
-                    paddingTop: "0.2rem",
-                  }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p
-                  style={{
-                    fontFamily: theme.bodyFont,
-                    fontSize: "0.9rem",
-                    lineHeight: 1.6,
-                    color: theme.muted,
-                  }}
-                >
-                  {step}
-                </p>
+                {/* Step indicator column */}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
+                  {/* Numbered circle */}
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      border: `1px solid ${theme.accent}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: theme.bg,
+                      flexShrink: 0,
+                      zIndex: 1,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: theme.monoFont,
+                        fontSize: "0.6rem",
+                        color: theme.accent,
+                        lineHeight: 1,
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  {/* Connecting line (not on last step) */}
+                  {i < project.process.length - 1 && (
+                    <div
+                      style={{
+                        width: "1px",
+                        flex: 1,
+                        minHeight: "40px",
+                        background: `${theme.accent}30`,
+                        marginTop: "4px",
+                      }}
+                    />
+                  )}
+                </div>
+
+                {/* Step content */}
+                <div style={{ paddingBottom: i < project.process.length - 1 ? "2rem" : 0, paddingTop: "4px" }}>
+                  <p
+                    style={{
+                      fontFamily: theme.bodyFont,
+                      fontSize: "clamp(0.85rem, 2vw, 0.9rem)",
+                      lineHeight: 1.6,
+                      color: theme.muted,
+                    }}
+                  >
+                    {step}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -476,11 +508,10 @@ export default function ProjectPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "200px 1fr",
+              gridTemplateColumns: isDesktop ? "200px 1fr" : "1fr",
               gap: "4rem",
               alignItems: "start",
             }}
-            className="grid-cols-1 lg:grid-cols-[200px_1fr]"
           >
             <p
               style={{
@@ -519,11 +550,10 @@ export default function ProjectPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "200px 1fr",
+                gridTemplateColumns: isDesktop ? "200px 1fr" : "1fr",
                 gap: "4rem",
                 alignItems: "start",
               }}
-              className="grid-cols-1 lg:grid-cols-[200px_1fr]"
             >
               <p
                 style={{

@@ -1,7 +1,10 @@
 import { Outlet, Link, useLocation } from "react-router";
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { BackToCore } from "../../components/shared/BackToCore";
+import { ThemeToggle } from "../../components/shared/ThemeToggle";
+import { ThemeProvider, useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -13,8 +16,10 @@ const navLinks = [
   { to: "/spy/contact", label: "Contact" },
 ];
 
-export default function SpyLayout() {
+function SpyLayoutInner() {
   const location = useLocation();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,11 +34,12 @@ export default function SpyLayout() {
   return (
     <div
       style={{
-        background: "#080C18",
+        background: theme.bg,
         minHeight: "100vh",
         fontFamily: "'Space Grotesk', sans-serif",
-        color: "#F0EEE5",
+        color: theme.fg,
         position: "relative",
+        transition: "background 0.4s ease, color 0.4s ease",
       }}
     >
       {/* Subtle grid overlay */}
@@ -41,11 +47,11 @@ export default function SpyLayout() {
         style={{
           position: "fixed",
           inset: 0,
-          backgroundImage:
-            "linear-gradient(rgba(240,238,229,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(240,238,229,0.02) 1px, transparent 1px)",
+          backgroundImage: `linear-gradient(${theme.gridLine} 1px, transparent 1px), linear-gradient(90deg, ${theme.gridLine} 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
           pointerEvents: "none",
           zIndex: 0,
+          transition: "background-image 0.4s ease",
         }}
       />
 
@@ -60,13 +66,13 @@ export default function SpyLayout() {
           left: 0,
           right: 0,
           zIndex: 40,
-          padding: "1.25rem 3rem",
+          padding: "1.25rem clamp(1rem, 4vw, 3rem)",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: scrolled ? "rgba(8,12,24,0.92)" : "rgba(8,12,24,0.7)",
+          background: scrolled ? theme.navBgScrolled : theme.navBg,
           backdropFilter: "blur(12px)",
-          borderBottom: `1px solid ${scrolled ? "rgba(204,18,52,0.2)" : "rgba(204,18,52,0.08)"}`,
+          borderBottom: `1px solid ${scrolled ? theme.borderSubtle : "transparent"}`,
           transition: "all 0.3s ease",
         }}
       >
@@ -77,9 +83,10 @@ export default function SpyLayout() {
             fontSize: "0.95rem",
             fontWeight: 600,
             letterSpacing: "0.08em",
-            color: "#F0EEE5",
+            color: theme.fg,
             textDecoration: "none",
             textTransform: "uppercase",
+            transition: "color 0.3s ease",
           }}
         >
           Spy D. Veloper
@@ -95,14 +102,14 @@ export default function SpyLayout() {
                 to={to}
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "0.7rem",
+                  fontSize: "clamp(0.65rem, 1.5vw, 0.7rem)",
                   fontWeight: active ? 500 : 400,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  color: active ? "#CC1234" : "rgba(240,238,229,0.5)",
+                  color: active ? theme.accent : theme.fgMuted,
                   textDecoration: "none",
                   transition: "color 0.15s ease",
-                  borderBottom: active ? "1px solid #CC1234" : "none",
+                  borderBottom: active ? `1px solid ${theme.accent}` : "none",
                   paddingBottom: active ? "1px" : "2px",
                 }}
               >
@@ -110,57 +117,94 @@ export default function SpyLayout() {
               </Link>
             );
           })}
-          <BackToCore style={{ color: "rgba(240,238,229,0.3)" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <ThemeToggle identity="spy" />
+            <BackToCore style={{ color: theme.fgMuted }} />
+          </div>
         </nav>
 
         <button
           className="md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
-          style={{ color: "#F0EEE5", background: "transparent", border: "none", cursor: "pointer" }}
+          style={{ color: theme.fg, background: "transparent", border: "none", cursor: "pointer", padding: "0.5rem" }}
         >
           {menuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
         </button>
       </motion.header>
 
+      {/* Mobile menu backdrop */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="spy-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMenuOpen(false)}
+            style={{ position: "fixed", inset: 0, zIndex: 38, background: "rgba(0,0,0,0.5)" }}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 39,
-            background: "#080C18",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "3rem",
-            gap: "2rem",
-          }}
-        >
-          {navLinks.map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "1.8rem",
-                fontWeight: 600,
-                color: "#F0EEE5",
-                textDecoration: "none",
-                textTransform: "uppercase",
-              }}
-            >
-              {label}
-            </Link>
-          ))}
-          <BackToCore style={{ color: "rgba(240,238,229,0.35)", marginTop: "1rem" }} />
-        </div>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="spy-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 39,
+              background: theme.bg,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              padding: "3rem",
+              gap: "0.25rem",
+            }}
+          >
+            {navLinks.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "1.8rem",
+                  fontWeight: 600,
+                  color: theme.fg,
+                  textDecoration: "none",
+                  textTransform: "uppercase",
+                  padding: "0.75rem 0",
+                }}
+              >
+                {label}
+              </Link>
+            ))}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "1.5rem" }}>
+              <BackToCore style={{ color: theme.fgMuted }} />
+              <ThemeToggle identity="spy" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Content */}
       <div style={{ paddingTop: "72px", position: "relative", zIndex: 1 }}>
         <Outlet />
       </div>
     </div>
+  );
+}
+
+export default function SpyLayout() {
+  return (
+    <ThemeProvider identity="spy">
+      <SpyLayoutInner />
+    </ThemeProvider>
   );
 }

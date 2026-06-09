@@ -109,7 +109,7 @@ export const currentFocus = [
     name: "NYX Bureau",
     category: "Studio",
     status: "Active",
-    accent: "#A78BFA",
+    accent: "#67E8F9",
   },
   {
     id: "cyber-community",
@@ -175,7 +175,7 @@ export const yuukayceeProjects: Project[] = [
     lessons:
       "The best brand systems hold tension rather than resolve it. NYX needed to feel like it could occupy two rooms simultaneously.",
     featured: true,
-    coverColor: "#A78BFA",
+    coverColor: "#67E8F9",
   },
   {
     id: "meridian-ui",
@@ -256,7 +256,7 @@ export const yuukayceeProjects: Project[] = [
     lessons:
       "The best interface design removes decisions. Not features — decisions. The cognitive difference matters.",
     featured: false,
-    coverColor: "#C4B5FD",
+    coverColor: "#2DD4BF",
   },
   {
     id: "emergence-posters",
@@ -309,7 +309,7 @@ export const yuukayceeProjects: Project[] = [
     lessons:
       "Design concepts that solve real problems get real attention. The gap between tool and need is the design opportunity.",
     featured: false,
-    coverColor: "#A78BFA",
+    coverColor: "#67E8F9",
   },
 ];
 
@@ -693,6 +693,49 @@ export const ctfArchive = [
 
 // ─── Featured Work (Core page) ────────────────────────────────────────────────
 
+export const cyberBlogPosts = [
+  {
+    id: "blog-1",
+    title: "Algorithm Confusion: A Deep Dive",
+    category: "Vulnerability Research",
+    date: "2024-03",
+    readTime: "12 min",
+    excerpt:
+      "JWT algorithm confusion vulnerabilities allow attackers to switch between symmetric and asymmetric algorithms. We analyzed 8 libraries, found 3 weaknesses, and worked with maintainers to patch all of them.",
+    externalUrl: "#",
+  },
+  {
+    id: "blog-2",
+    title: "DEF CON 32 CTF Qualifier Writeup",
+    category: "CTF Writeup",
+    date: "2024-02",
+    readTime: "8 min",
+    excerpt:
+      "A walkthrough of three challenges from the DEF CON 32 qualifier: a heap exploitation problem, a format string bug, and a cryptographic oracle attack. Placed in the top 15% of qualifying teams.",
+    externalUrl: "#",
+  },
+  {
+    id: "blog-3",
+    title: "Dependency Confusion at Scale",
+    category: "Security Research",
+    date: "2024-01",
+    readTime: "10 min",
+    excerpt:
+      "Systematic analysis of the npm dependency confusion attack surface. We identified 1,400+ vulnerable package name patterns, built open-source tooling, and contributed findings to npm security team guidance.",
+    externalUrl: "#",
+  },
+  {
+    id: "blog-4",
+    title: "Understanding JWT Algorithm Confusion",
+    category: "Tutorial",
+    date: "2023-11",
+    readTime: "15 min",
+    excerpt:
+      "A developer-focused guide to JWT security: what algorithm confusion is, why it happens, how to reproduce it in a local test environment, and which mitigations actually work.",
+    externalUrl: "#",
+  },
+];
+
 export const featuredWork = [
   {
     id: "nyx-rebrand",
@@ -702,7 +745,7 @@ export const featuredWork = [
     year: "2024",
     description:
       "A complete visual identity system for a creative studio operating at the intersection of design and culture.",
-    coverColor: "#A78BFA",
+    coverColor: "#67E8F9",
     path: "/yuukaycee",
   },
   {

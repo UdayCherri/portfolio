@@ -1,137 +1,122 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowRight, Shield, Key, Package, Cpu } from "lucide-react";
 import { cyberResearch, securityProjects } from "../../data/content";
 import { useIsDesktop, useIsMd } from "../../components/shared/useMediaQuery";
-import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
-function ProfileArea() {
+const researchIcons: Record<string, React.ReactNode> = {
+  "jwt-confusion": <Key size={16} strokeWidth={1.5} />,
+  "supply-chain-analysis": <Package size={16} strokeWidth={1.5} />,
+  "kernel-analysis": <Cpu size={16} strokeWidth={1.5} />,
+};
+
+const severityWidth: Record<string, string> = {
+  Critical: "100%",
+  High: "75%",
+  Medium: "45%",
+  Low: "20%",
+};
+
+const severityColor: Record<string, string> = {
+  Critical: "rgba(239,68,68,0.8)",
+  High: "rgba(245,158,11,0.8)",
+  Medium: "rgba(107,114,128,0.7)",
+  Low: "rgba(59,130,246,0.6)",
+};
+
+const severityBorder: Record<string, string> = {
+  Critical: "rgba(239,68,68,0.4)",
+  High: "rgba(245,158,11,0.4)",
+  Medium: "rgba(107,114,128,0.4)",
+  Low: "rgba(59,130,246,0.4)",
+};
+
+function ProfileArea({ theme, mode }: { theme: ReturnType<typeof getIdentityTheme>; mode: "dark" | "light" }) {
   return (
-    <div
+    <motion.div
       style={{
         position: "relative",
         width: "100%",
         maxWidth: "460px",
         aspectRatio: "4/5",
-        background: "#0A0E12",
-        border: "1px solid rgba(16,185,129,0.15)",
         overflow: "hidden",
         flexShrink: 0,
+        border: `1px solid ${theme.borderSubtle}`,
       }}
+      whileHover="hover"
     >
-      <ImageWithFallback
-        src="/assets/images/cb.png"
-        alt="CYB3R-BO1 Profile"
+      {/* Security researcher photograph */}
+      <motion.img
+        src="assets/images/cyb3r-profile.png"
+        alt="Security researcher portrait"
+        variants={{ hover: { scale: 1.04 } }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          position: "absolute",
-          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          zIndex: 1,
+          objectPosition: "center top",
+          display: "block",
+          filter: mode === "dark" ? "brightness(0.78) saturate(0.8)" : "brightness(0.92) saturate(0.82)",
         }}
       />
-      {/* Scan lines */}
+
+      {/* Gradient overlay — bottom */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(16,185,129,0.03) 3px, rgba(16,185,129,0.03) 4px)",
-          zIndex: 2,
+          background: mode === "dark"
+            ? "linear-gradient(to top, rgba(5,7,12,0.85) 0%, rgba(5,7,12,0.1) 50%, transparent 100%)"
+            : "linear-gradient(to top, rgba(238,244,241,0.8) 0%, rgba(238,244,241,0.05) 50%, transparent 100%)",
+          pointerEvents: "none",
         }}
       />
 
-      {/* Geometric */}
-      <svg viewBox="0 0 460 575" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.3, zIndex: 3 }}>
-        <rect x="80" y="80" width="300" height="415" fill="none" stroke="rgba(16,185,129,0.3)" strokeWidth="0.5" strokeDasharray="4 4" />
-        <rect x="110" y="110" width="240" height="355" fill="none" stroke="rgba(16,185,129,0.15)" strokeWidth="0.5" />
-        <circle cx="230" cy="287" r="120" fill="none" stroke="rgba(45,212,191,0.2)" strokeWidth="0.5" strokeDasharray="3 5" />
-        <circle cx="230" cy="287" r="80" fill="none" stroke="rgba(16,185,129,0.25)" strokeWidth="0.5" />
-        <line x1="80" y1="287" x2="380" y2="287" stroke="rgba(16,185,129,0.1)" strokeWidth="0.5" />
-        <line x1="230" y1="80" x2="230" y2="495" stroke="rgba(16,185,129,0.1)" strokeWidth="0.5" />
-        {/* Crosshair */}
-        <line x1="222" y1="287" x2="238" y2="287" stroke="#10B981" strokeWidth="1" />
-        <line x1="230" y1="279" x2="230" y2="295" stroke="#10B981" strokeWidth="1" />
-        <circle cx="230" cy="287" r="4" fill="none" stroke="#10B981" strokeWidth="1" />
-      </svg>
-
+      {/* Subtle green accent edge — top */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to top, rgba(15,19,24,1) 0%, transparent 50%)",
-          zIndex: 3,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "1px",
+          background: `linear-gradient(90deg, transparent, ${theme.accent}, transparent)`,
+          opacity: 0.6,
         }}
       />
 
-      {/* Terminal-style info */}
-      <div style={{ position: "absolute", top: "1.5rem", left: "1.5rem", zIndex: 4 }}>
-        <p
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.55rem",
-            color: "rgba(16,185,129,0.5)",
-            letterSpacing: "0.1em",
-          }}
-        >
-          ID: CYB3R-BO1
-        </p>
-        <p
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.55rem",
-            color: "rgba(16,185,129,0.3)",
-            marginTop: "0.2rem",
-          }}
-        >
+      {/* Identity classification — top */}
+      <div style={{ position: "absolute", top: "1.25rem", left: "1.25rem" }}>
+        <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", color: `${theme.accent}99`, letterSpacing: "0.12em" }}>
           CLASS: RESEARCHER
         </p>
       </div>
 
-      <div
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          left: "2rem",
-          right: "2rem",
-          zIndex: 4,
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.55rem",
-            letterSpacing: "0.2em",
-            color: "#10B981",
-            marginBottom: "0.5rem",
-            opacity: 0.7,
-          }}
-        >
-          THE RESEARCHER
+      {/* Identity label — bottom */}
+      <div style={{ position: "absolute", bottom: "1.75rem", left: "1.75rem", right: "1.75rem" }}>
+        <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.25em", color: theme.accent, marginBottom: "0.35rem", opacity: 0.8 }}>
+          THE INTELLIGENCE NETWORK
         </p>
-        <p
-          style={{
-            fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "1.1rem",
-            fontWeight: 500,
-            color: "#E2EAF0",
-            letterSpacing: "0.05em",
-          }}
-        >
+        <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.1rem", fontWeight: 500, color: mode === "dark" ? "rgba(236,253,245,0.95)" : "rgba(5,30,18,0.9)", letterSpacing: "0.05em" }}>
           CYB3R-BO1
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function CyberHome() {
   const navigate = useNavigate();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("cyb3r", mode);
   const isDesktop = useIsDesktop();
   const isMd = useIsMd();
 
   return (
-    <div style={{ background: "#0F1318", minHeight: "100vh" }}>
+    <div style={{ background: "transparent", minHeight: "100vh" }}>
       {/* Hero */}
       <section
         style={{
@@ -157,20 +142,15 @@ export default function CyberHome() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.35 }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                marginBottom: "2rem",
-              }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "2rem" }}
             >
-              <Shield size={10} strokeWidth={2} color="#10B981" />
+              <Shield size={10} strokeWidth={2} color={theme.accent} />
               <span
                 style={{
                   fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: "0.6rem",
+                  fontSize: "clamp(0.6rem, 1.5vw, 0.6rem)",
                   letterSpacing: "0.15em",
-                  color: "rgba(16,185,129,0.7)",
+                  color: `${theme.accent}B3`,
                 }}
               >
                 SECURITY_BEGINS_WITH_UNDERSTANDING
@@ -185,15 +165,16 @@ export default function CyberHome() {
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: "clamp(2rem, 5vw, 4.5rem)",
                 fontWeight: 500,
-                color: "#E2EAF0",
+                color: theme.fg,
                 lineHeight: 1.15,
                 letterSpacing: "-0.02em",
                 marginBottom: "2rem",
+                transition: "color 0.3s ease",
               }}
             >
               Security<br />
               begins with<br />
-              <span style={{ color: "#10B981" }}>understanding</span>
+              <span style={{ color: theme.accent }}>understanding</span>
             </motion.h1>
 
             <motion.p
@@ -202,9 +183,9 @@ export default function CyberHome() {
               transition={{ duration: 0.4, delay: 0.2 }}
               style={{
                 fontFamily: "'IBM Plex Sans', sans-serif",
-                fontSize: "0.9rem",
+                fontSize: "clamp(0.85rem, 2vw, 0.9rem)",
                 lineHeight: 1.75,
-                color: "rgba(226,234,240,0.5)",
+                color: theme.fgMuted,
                 maxWidth: "420px",
                 marginBottom: "3rem",
               }}
@@ -228,15 +209,15 @@ export default function CyberHome() {
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: "0.65rem",
                   letterSpacing: "0.1em",
-                  color: "#0F1318",
-                  background: "#10B981",
-                  border: "1px solid #10B981",
+                  color: mode === "dark" ? "#0F1318" : "#fff",
+                  background: theme.accent,
+                  border: `1px solid ${theme.accent}`,
                   padding: "0.85rem 1.75rem",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "#0D9668"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "#10B981"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
               >
                 View Research
                 <ArrowRight size={12} strokeWidth={2} />
@@ -250,20 +231,20 @@ export default function CyberHome() {
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: "0.65rem",
                   letterSpacing: "0.1em",
-                  color: "rgba(226,234,240,0.5)",
+                  color: theme.fgMuted,
                   background: "transparent",
-                  border: "1px solid rgba(16,185,129,0.2)",
+                  border: `1px solid ${theme.borderSubtle}`,
                   padding: "0.85rem 1.75rem",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#10B981";
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
+                  e.currentTarget.style.color = theme.accent;
+                  e.currentTarget.style.borderColor = `${theme.accent}80`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(226,234,240,0.5)";
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.2)";
+                  e.currentTarget.style.color = theme.fgMuted;
+                  e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
                 CTF Archive
@@ -271,14 +252,17 @@ export default function CyberHome() {
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <ProfileArea />
-          </motion.div>
+          {/* Portrait — desktop only */}
+          {isDesktop && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <ProfileArea theme={theme} mode={mode} />
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -286,16 +270,16 @@ export default function CyberHome() {
       <section
         style={{
           padding: "5rem clamp(2rem, 6vw, 6rem)",
-          borderTop: "1px solid rgba(16,185,129,0.1)",
+          borderTop: `1px solid ${theme.borderSubtle}`,
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <p
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "clamp(0.6rem, 1.5vw, 0.6rem)",
               letterSpacing: "0.2em",
-              color: "rgba(16,185,129,0.6)",
+              color: `${theme.accent}99`,
               marginBottom: "3rem",
             }}
           >
@@ -306,7 +290,7 @@ export default function CyberHome() {
               display: "grid",
               gridTemplateColumns: isMd ? "repeat(3, 1fr)" : "1fr",
               gap: "1px",
-              background: "rgba(16,185,129,0.06)",
+              background: `${theme.accent}0F`,
             }}
           >
             {cyberResearch.map((item, i) => (
@@ -319,47 +303,85 @@ export default function CyberHome() {
                 onClick={() => navigate("/cyb3r/research")}
                 style={{
                   padding: "2.5rem",
-                  background: "#0F1318",
+                  background: theme.bg,
                   cursor: "pointer",
                   transition: "background 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "rgba(16,185,129,0.04)";
+                  (e.currentTarget as HTMLDivElement).style.background = `${theme.accent}0A`;
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "#0F1318";
+                  (e.currentTarget as HTMLDivElement).style.background = theme.bg;
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
+                {/* Category icon */}
+                <div
+                  style={{
+                    color: `${theme.accent}99`,
+                    marginBottom: "1rem",
+                  }}
+                >
+                  {researchIcons[item.id]}
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
                   <span
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.15em",
-                      color: "rgba(16,185,129,0.5)",
+                      color: `${theme.accent}80`,
                     }}
                   >
                     {item.year}
                   </span>
-                  <span
+                  <motion.span
+                    animate={
+                      item.severity === "Critical"
+                        ? { scale: [1, 1.04, 1], transition: { repeat: Infinity, duration: 3 } }
+                        : {}
+                    }
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.1em",
                       padding: "0.15rem 0.5rem",
-                      border: `1px solid ${item.severity === "Critical" ? "rgba(239,68,68,0.4)" : item.severity === "High" ? "rgba(245,158,11,0.4)" : "rgba(107,114,128,0.4)"}`,
-                      color: item.severity === "Critical" ? "rgba(239,68,68,0.8)" : item.severity === "High" ? "rgba(245,158,11,0.8)" : "rgba(107,114,128,0.8)",
+                      border: `1px solid ${severityBorder[item.severity] ?? "rgba(107,114,128,0.4)"}`,
+                      color: severityColor[item.severity] ?? "rgba(107,114,128,0.8)",
+                      display: "inline-block",
                     }}
                   >
                     {item.severity}
-                  </span>
+                  </motion.span>
                 </div>
+
+                {/* Severity bar */}
+                <div
+                  style={{
+                    width: "100%",
+                    height: "4px",
+                    background: `${theme.accent}15`,
+                    marginBottom: "1.25rem",
+                    borderRadius: "2px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: severityWidth[item.severity] ?? "30%",
+                      background: severityColor[item.severity] ?? "rgba(107,114,128,0.7)",
+                      borderRadius: "2px",
+                    }}
+                  />
+                </div>
+
                 <h3
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "1rem",
+                    fontSize: "clamp(0.85rem, 2vw, 1rem)",
                     fontWeight: 500,
-                    color: "#E2EAF0",
+                    color: theme.fg,
                     lineHeight: 1.3,
                     marginBottom: "0.75rem",
                     letterSpacing: "-0.01em",
@@ -370,8 +392,8 @@ export default function CyberHome() {
                 <p
                   style={{
                     fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: "0.8rem",
-                    color: "rgba(226,234,240,0.45)",
+                    fontSize: "clamp(0.75rem, 1.8vw, 0.8rem)",
+                    color: theme.fgMuted,
                     lineHeight: 1.65,
                     marginBottom: "1.5rem",
                   }}
@@ -384,11 +406,11 @@ export default function CyberHome() {
                       key={tag}
                       style={{
                         fontFamily: "'IBM Plex Mono', monospace",
-                        fontSize: "0.55rem",
+                        fontSize: "0.6rem",
                         letterSpacing: "0.08em",
                         padding: "0.2rem 0.5rem",
-                        border: "1px solid rgba(16,185,129,0.12)",
-                        color: "rgba(16,185,129,0.5)",
+                        border: `1px solid ${theme.borderSubtle}`,
+                        color: `${theme.accent}80`,
                       }}
                     >
                       {tag}
@@ -405,7 +427,7 @@ export default function CyberHome() {
       <section
         style={{
           padding: "5rem clamp(2rem, 6vw, 6rem)",
-          borderTop: "1px solid rgba(16,185,129,0.08)",
+          borderTop: `1px solid ${theme.borderSubtle}`,
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -413,9 +435,9 @@ export default function CyberHome() {
             <p
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
-                fontSize: "0.6rem",
+                fontSize: "clamp(0.6rem, 1.5vw, 0.6rem)",
                 letterSpacing: "0.2em",
-                color: "rgba(16,185,129,0.5)",
+                color: `${theme.accent}80`,
               }}
             >
               SECURITY_TOOLS
@@ -426,16 +448,17 @@ export default function CyberHome() {
                 fontFamily: "'IBM Plex Mono', monospace",
                 fontSize: "0.6rem",
                 letterSpacing: "0.1em",
-                color: "rgba(226,234,240,0.35)",
+                color: theme.fgMuted,
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 gap: "0.4rem",
+                transition: "color 0.15s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#10B981")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(226,234,240,0.35)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = theme.accent)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = theme.fgMuted)}
             >
               All Projects <ArrowRight size={10} strokeWidth={2} />
             </button>
@@ -445,7 +468,7 @@ export default function CyberHome() {
               display: "grid",
               gridTemplateColumns: isMd ? "repeat(2, 1fr)" : "1fr",
               gap: "1px",
-              background: "rgba(16,185,129,0.05)",
+              background: `${theme.accent}0D`,
             }}
           >
             {securityProjects.slice(0, 2).map((project, i) => (
@@ -458,13 +481,13 @@ export default function CyberHome() {
                 onClick={() => navigate("/cyb3r/security-projects")}
                 style={{
                   padding: "2.5rem",
-                  background: "#0F1318",
+                  background: theme.bg,
                   cursor: "pointer",
                   borderTop: "2px solid transparent",
                   transition: "border-color 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderTopColor = "#10B981";
+                  (e.currentTarget as HTMLDivElement).style.borderTopColor = theme.accent;
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLDivElement).style.borderTopColor = "transparent";
@@ -473,9 +496,9 @@ export default function CyberHome() {
                 <p
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "0.55rem",
+                    fontSize: "0.6rem",
                     letterSpacing: "0.15em",
-                    color: "#10B981",
+                    color: theme.accent,
                     opacity: 0.6,
                     marginBottom: "1rem",
                   }}
@@ -485,9 +508,9 @@ export default function CyberHome() {
                 <h3
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "1rem",
+                    fontSize: "clamp(0.9rem, 2vw, 1rem)",
                     fontWeight: 500,
-                    color: "#E2EAF0",
+                    color: theme.fg,
                     marginBottom: "0.5rem",
                   }}
                 >
@@ -496,8 +519,8 @@ export default function CyberHome() {
                 <p
                   style={{
                     fontFamily: "'IBM Plex Sans', sans-serif",
-                    fontSize: "0.82rem",
-                    color: "rgba(226,234,240,0.4)",
+                    fontSize: "clamp(0.78rem, 2vw, 0.82rem)",
+                    color: theme.fgMuted,
                     lineHeight: 1.6,
                   }}
                 >

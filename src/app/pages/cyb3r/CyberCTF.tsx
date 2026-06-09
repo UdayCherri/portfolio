@@ -1,9 +1,14 @@
 import { motion } from "motion/react";
 import { ctfArchive } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function CyberCTF() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("cyb3r", mode);
+
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#0F1318" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0 }}
@@ -14,9 +19,10 @@ export default function CyberCTF() {
           <p
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.2em",
-              color: "rgba(16,185,129,0.5)",
+              color: theme.accent,
+              opacity: 0.65,
               marginBottom: "1rem",
             }}
           >
@@ -27,7 +33,7 @@ export default function CyberCTF() {
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: "clamp(2rem, 5vw, 3.5rem)",
               fontWeight: 500,
-              color: "#E2EAF0",
+              color: theme.fg,
               letterSpacing: "-0.02em",
             }}
           >
@@ -36,8 +42,8 @@ export default function CyberCTF() {
           <p
             style={{
               fontFamily: "'IBM Plex Sans', sans-serif",
-              fontSize: "0.9rem",
-              color: "rgba(226,234,240,0.4)",
+              fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
+              color: theme.fgMuted,
               marginTop: "1.5rem",
               lineHeight: 1.7,
               maxWidth: "520px",
@@ -56,17 +62,17 @@ export default function CyberCTF() {
               transition={{ duration: 0.3, delay: i * 0.06 }}
               style={{
                 padding: "2.5rem 2rem",
-                border: "1px solid rgba(16,185,129,0.07)",
+                border: `1px solid ${theme.borderSubtle}`,
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.borderColor = "rgba(16,185,129,0.18)";
-                el.style.background = "rgba(16,185,129,0.02)";
+                el.style.borderColor = theme.accent + "33";
+                el.style.background = theme.accent + "03";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.borderColor = "rgba(16,185,129,0.07)";
+                el.style.borderColor = theme.borderSubtle;
                 el.style.background = "transparent";
               }}
             >
@@ -83,9 +89,10 @@ export default function CyberCTF() {
                   <p
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.15em",
-                      color: "rgba(226,234,240,0.25)",
+                      color: theme.fgMuted,
+                      opacity: 0.55,
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -96,7 +103,7 @@ export default function CyberCTF() {
                       fontFamily: "'IBM Plex Mono', monospace",
                       fontSize: "1.05rem",
                       fontWeight: 500,
-                      color: "#E2EAF0",
+                      color: theme.fg,
                       lineHeight: 1.3,
                     }}
                   >
@@ -106,7 +113,7 @@ export default function CyberCTF() {
                 <div
                   style={{
                     padding: "0.35rem 0.75rem",
-                    border: "1px solid rgba(16,185,129,0.25)",
+                    border: `1px solid ${theme.accent}44`,
                     textAlign: "center",
                     flexShrink: 0,
                   }}
@@ -116,7 +123,7 @@ export default function CyberCTF() {
                       fontFamily: "'IBM Plex Mono', monospace",
                       fontSize: "0.7rem",
                       fontWeight: 500,
-                      color: "#10B981",
+                      color: theme.accent,
                       letterSpacing: "0.05em",
                       whiteSpace: "nowrap",
                     }}
@@ -132,11 +139,12 @@ export default function CyberCTF() {
                     key={cat}
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.1em",
                       padding: "0.2rem 0.5rem",
-                      border: "1px solid rgba(16,185,129,0.12)",
-                      color: "rgba(16,185,129,0.5)",
+                      border: `1px solid ${theme.borderSubtle}`,
+                      color: theme.accent,
+                      opacity: 0.7,
                     }}
                   >
                     {cat}
@@ -150,8 +158,9 @@ export default function CyberCTF() {
                     <span
                       style={{
                         fontFamily: "'IBM Plex Mono', monospace",
-                        fontSize: "0.55rem",
-                        color: "rgba(45,212,191,0.5)",
+                        fontSize: "0.6rem",
+                        color: theme.accentSecondary,
+                        opacity: 0.65,
                         marginTop: "0.1rem",
                         flexShrink: 0,
                       }}
@@ -161,8 +170,8 @@ export default function CyberCTF() {
                     <p
                       style={{
                         fontFamily: "'IBM Plex Mono', monospace",
-                        fontSize: "0.7rem",
-                        color: "rgba(226,234,240,0.45)",
+                        fontSize: "clamp(0.7rem, 1.4vw, 0.75rem)",
+                        color: theme.fgMuted,
                         lineHeight: 1.5,
                         letterSpacing: "0.02em",
                       }}

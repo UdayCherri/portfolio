@@ -3,115 +3,123 @@ import { useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
 import { yuukayceeProjects } from "../../data/content";
 import { useIsDesktop, useIsMd } from "../../components/shared/useMediaQuery";
-import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
-function ProfileArea() {
+// Portrait hero — creative director editorial portrait with prismatic color treatment
+function PortraitHero({ theme, mode }: { theme: ReturnType<typeof getIdentityTheme>; mode: "dark" | "light" }) {
+  const borderColor = mode === "dark" ? "rgba(103,232,249,0.16)" : "rgba(8,145,178,0.2)";
+  const captionBg = mode === "dark" ? "rgba(8,10,18,0.72)" : "rgba(245,248,255,0.82)";
+
   return (
-    <div
+    <motion.div
       style={{
         position: "relative",
         width: "100%",
         maxWidth: "480px",
-        aspectRatio: "4/5",
-        background: "linear-gradient(135deg, #1a1428 0%, #0C0A15 50%, #15102a 100%)",
+        aspectRatio: "3/4",
         overflow: "hidden",
-        flexShrink: 0,
+        border: `1px solid ${borderColor}`,
       }}
+      whileHover="hover"
     >
-      <ImageWithFallback
-        src="/assets/images/ykc.jpg"
-        alt="YuuKayCee Profile"
+      {/* Portrait photograph */}
+      <motion.img
+        src="assets/images/yuukaycee-profile.png"
+        alt="Creative director portrait"
+        variants={{ hover: { scale: 1.04 } }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          position: "absolute",
-          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          zIndex: 1,
+          objectPosition: "center top",
+          display: "block",
+          filter: mode === "dark" ? "brightness(0.88) saturate(0.9)" : "brightness(0.96) saturate(0.85)",
         }}
       />
-      {/* Geometric composition */}
-      <svg
-        viewBox="0 0 480 600"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.4, zIndex: 2 }}
-      >
-        <circle cx="240" cy="240" r="180" fill="none" stroke="#A78BFA" strokeWidth="0.5" />
-        <circle cx="240" cy="240" r="140" fill="none" stroke="#67E8F9" strokeWidth="0.3" />
-        <circle cx="240" cy="240" r="90" fill="none" stroke="#FDBA8C" strokeWidth="0.5" />
-        <line x1="60" y1="240" x2="420" y2="240" stroke="#A78BFA" strokeWidth="0.3" />
-        <line x1="240" y1="60" x2="240" y2="420" stroke="#A78BFA" strokeWidth="0.3" />
-        <rect x="160" y="160" width="160" height="160" fill="none" stroke="#C4B5FD" strokeWidth="0.4" transform="rotate(45 240 240)" />
-      </svg>
 
-      {/* Gradient layers */}
+      {/* Prismatic color overlay — light passing through from top-left */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: mode === "dark"
+            ? [
+                "linear-gradient(128deg, rgba(103,232,249,0.08) 0%, rgba(45,212,191,0.04) 30%, rgba(196,181,253,0.04) 60%, rgba(244,114,182,0.03) 100%)",
+                "linear-gradient(to top, rgba(8,10,18,0.55) 0%, transparent 50%)",
+              ].join(", ")
+            : [
+                "linear-gradient(128deg, rgba(8,145,178,0.07) 0%, rgba(20,184,166,0.04) 30%, rgba(13,148,136,0.03) 60%, rgba(219,39,119,0.02) 100%)",
+                "linear-gradient(to top, rgba(245,248,255,0.55) 0%, transparent 50%)",
+              ].join(", "),
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Thin chromatic edge — top */}
       <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
-          height: "60%",
-          background: "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.15) 0%, transparent 70%)",
-          zIndex: 2,
+          height: "2px",
+          background: mode === "dark"
+            ? "linear-gradient(90deg, rgba(103,232,249,0.6) 0%, rgba(45,212,191,0.4) 25%, rgba(196,181,253,0.4) 50%, rgba(244,114,182,0.4) 75%, rgba(251,191,36,0.4) 100%)"
+            : "linear-gradient(90deg, rgba(8,145,178,0.5) 0%, rgba(20,184,166,0.4) 25%, rgba(13,148,136,0.3) 50%, rgba(219,39,119,0.3) 75%, rgba(217,119,6,0.3) 100%)",
+          opacity: 0.8,
         }}
       />
+
+      {/* Bottom identity label */}
       <div
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          height: "40%",
-          background: "linear-gradient(to top, rgba(12,10,21,1) 0%, transparent 100%)",
-          zIndex: 2,
-        }}
-      />
-
-      {/* Identity text */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-          left: "2rem",
-          right: "2rem",
-          zIndex: 3,
+          padding: "2rem 1.5rem 1.5rem",
         }}
       >
         <p
           style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'DM Sans', sans-serif",
             fontSize: "0.6rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "#A78BFA",
-            marginBottom: "0.5rem",
+            color: theme.accent,
+            marginBottom: "0.35rem",
           }}
         >
-          The Creator
+          Creative Director
         </p>
         <p
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: "1.5rem",
+            fontSize: "1.1rem",
             fontWeight: 400,
-            color: "#EEE9F8",
+            color: mode === "dark" ? "rgba(240,238,248,0.95)" : "rgba(14,16,32,0.9)",
+            letterSpacing: "0.02em",
           }}
         >
           YuuKayCee
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function YuuKayCeeHome() {
   const navigate = useNavigate();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("yuukaycee", mode);
   const featured = yuukayceeProjects.filter((p) => p.featured);
   const isDesktop = useIsDesktop();
   const isMd = useIsMd();
 
   return (
-    <div style={{ background: "#0C0A15", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: "transparent" }}>
       {/* Hero */}
       <section
         style={{
@@ -140,10 +148,10 @@ export default function YuuKayCeeHome() {
               transition={{ duration: 0.8, delay: 0.1 }}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "clamp(0.6rem, 1.5vw, 0.65rem)",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
-                color: "#A78BFA",
+                color: theme.accent,
                 marginBottom: "2rem",
               }}
             >
@@ -158,13 +166,13 @@ export default function YuuKayCeeHome() {
                 fontFamily: "'Playfair Display', serif",
                 fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
                 fontWeight: 400,
-                color: "#EEE9F8",
+                color: theme.fg,
                 lineHeight: 1.1,
                 marginBottom: "2rem",
               }}
             >
               Designing<br />
-              <em style={{ color: "#A78BFA" }}>connections</em><br />
+              <em style={{ color: theme.accent }}>connections</em><br />
               between worlds
             </motion.h1>
 
@@ -174,9 +182,9 @@ export default function YuuKayCeeHome() {
               transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: "1rem",
+                fontSize: "clamp(0.875rem, 2vw, 1rem)",
                 lineHeight: 1.75,
-                color: "rgba(238,233,248,0.55)",
+                color: theme.fgMuted,
                 maxWidth: "420px",
                 marginBottom: "3rem",
               }}
@@ -198,16 +206,16 @@ export default function YuuKayCeeHome() {
                 fontSize: "0.75rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "#EEE9F8",
+                color: theme.fg,
                 background: "transparent",
-                border: "1px solid rgba(167,139,250,0.4)",
+                border: `1px solid ${theme.borderSubtle}`,
                 padding: "1rem 2rem",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
               }}
               whileHover={{
-                borderColor: "#A78BFA",
-                color: "#A78BFA",
+                borderColor: theme.accent,
+                color: theme.accent,
               }}
             >
               View Work
@@ -215,15 +223,17 @@ export default function YuuKayCeeHome() {
             </motion.button>
           </div>
 
-          {/* Right: Profile area */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <ProfileArea />
-          </motion.div>
+          {/* Right: Creative director portrait — desktop only */}
+          {isDesktop && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <PortraitHero theme={theme} mode={mode} />
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -231,7 +241,7 @@ export default function YuuKayCeeHome() {
       <section
         style={{
           padding: "6rem clamp(2rem, 6vw, 6rem)",
-          borderTop: "1px solid rgba(167,139,250,0.1)",
+          borderTop: `1px solid ${theme.borderSubtle}`,
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -245,16 +255,18 @@ export default function YuuKayCeeHome() {
               justifyContent: "space-between",
               alignItems: "flex-end",
               marginBottom: "4rem",
+              flexWrap: "wrap",
+              gap: "1rem",
             }}
           >
             <div>
               <p
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "0.65rem",
+                  fontSize: "clamp(0.6rem, 1.5vw, 0.65rem)",
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
-                  color: "#A78BFA",
+                  color: theme.accent,
                   marginBottom: "1rem",
                 }}
               >
@@ -265,7 +277,7 @@ export default function YuuKayCeeHome() {
                   fontFamily: "'Playfair Display', serif",
                   fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
                   fontWeight: 400,
-                  color: "#EEE9F8",
+                  color: theme.fg,
                 }}
               >
                 Selected Projects
@@ -278,7 +290,7 @@ export default function YuuKayCeeHome() {
                 fontSize: "0.7rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "rgba(238,233,248,0.5)",
+                color: theme.fgMuted,
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
@@ -287,8 +299,8 @@ export default function YuuKayCeeHome() {
                 gap: "0.5rem",
                 transition: "color 0.2s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#A78BFA")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(238,233,248,0.5)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = theme.accent)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = theme.fgMuted)}
             >
               All Work <ArrowRight size={12} strokeWidth={1.5} />
             </button>
@@ -314,7 +326,7 @@ export default function YuuKayCeeHome() {
                 <div
                   style={{
                     height: "380px",
-                    background: project.coverColor + "22",
+                    background: project.coverColor + "18",
                     border: `1px solid ${project.coverColor}20`,
                     position: "relative",
                     overflow: "hidden",
@@ -322,22 +334,45 @@ export default function YuuKayCeeHome() {
                     alignItems: "center",
                     justifyContent: "center",
                     marginBottom: "1.5rem",
-                    transition: "border-color 0.3s ease",
+                    transition: "border-color 0.3s ease, background 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.borderColor = project.coverColor + "60";
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.borderColor = project.coverColor + "55";
+                    el.style.background = project.coverColor + "26";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.borderColor = project.coverColor + "20";
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.borderColor = project.coverColor + "20";
+                    el.style.background = project.coverColor + "18";
                   }}
                 >
+                  {/* Layered letterforms */}
                   <div
                     style={{
                       fontFamily: "'Playfair Display', serif",
-                      fontSize: "7rem",
+                      fontSize: "10rem",
                       color: project.coverColor,
-                      opacity: 0.08,
+                      opacity: 0.07,
                       userSelect: "none",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  >
+                    {project.title.slice(0, 1)}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "5rem",
+                      color: project.coverColor,
+                      opacity: 0.15,
+                      userSelect: "none",
+                      position: "absolute",
+                      top: "30%",
+                      right: "10%",
                     }}
                   >
                     {project.title.slice(0, 2)}
@@ -374,7 +409,7 @@ export default function YuuKayCeeHome() {
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.6rem",
-                        color: "rgba(238,233,248,0.35)",
+                        color: theme.fgMuted,
                       }}
                     >
                       {project.year}
@@ -385,7 +420,7 @@ export default function YuuKayCeeHome() {
                       fontFamily: "'Playfair Display', serif",
                       fontSize: "1.6rem",
                       fontWeight: 400,
-                      color: "#EEE9F8",
+                      color: theme.fg,
                       marginBottom: "0.5rem",
                     }}
                   >
@@ -394,8 +429,8 @@ export default function YuuKayCeeHome() {
                   <p
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.85rem",
-                      color: "rgba(238,233,248,0.5)",
+                      fontSize: "clamp(0.82rem, 2vw, 0.9rem)",
+                      color: theme.fgMuted,
                       lineHeight: 1.6,
                     }}
                   >

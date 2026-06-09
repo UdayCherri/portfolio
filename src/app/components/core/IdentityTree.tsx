@@ -7,9 +7,9 @@ const identities = [
     id: "yuukaycee",
     path: "/yuukaycee",
     name: "YuuKayCee",
-    role: "The Creator",
+    role: "The Prism",
     discipline: "Design",
-    accent: "#A78BFA",
+    accent: "#67E8F9",
     font: "'Playfair Display', serif",
   },
   {
@@ -155,7 +155,7 @@ export function IdentityTree() {
                   width: "5px",
                   height: "5px",
                   borderRadius: "50%",
-                  background: "#A78BFA",
+                  background: "#67E8F9",
                   opacity: 0.7,
                 }}
               />
@@ -195,7 +195,7 @@ export function IdentityTree() {
                   top: 0,
                   width: "1px",
                   height: "20px",
-                  background: "rgba(167,139,250,0.4)",
+                  background: "rgba(103,232,249,0.4)",
                 }}
               />
               <div
@@ -271,7 +271,7 @@ export function IdentityTree() {
               <p
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.55rem",
+                  fontSize: "0.65rem",
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
                   color: identity.accent,

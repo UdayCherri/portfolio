@@ -1,12 +1,18 @@
 import { motion } from "motion/react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export function PhilosophySection() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
+
   return (
     <section
       style={{
         padding: "6rem clamp(2rem, 8vw, 8rem)",
-        background: "#F7F4EE",
-        borderTop: "1px solid rgba(28,28,28,0.08)",
+        background: theme.bg,
+        borderTop: `1px solid ${theme.borderSubtle}`,
+        transition: "background 0.4s ease",
       }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -26,7 +32,7 @@ export function PhilosophySection() {
             style={{
               width: "40px",
               height: "1px",
-              background: "#B8A46A",
+              background: theme.accent,
               transformOrigin: "left",
             }}
           />
@@ -40,7 +46,7 @@ export function PhilosophySection() {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(1.6rem, 3.5vw, 2.8rem)",
               fontWeight: 300,
-              color: "#1C1C1C",
+              color: theme.fg,
               lineHeight: 1.25,
               maxWidth: "680px",
               letterSpacing: "-0.01em",
@@ -48,7 +54,7 @@ export function PhilosophySection() {
           >
             Building across worlds.
             <br />
-            <span style={{ color: "rgba(28,28,28,0.45)", fontStyle: "italic" }}>
+            <span style={{ color: theme.fgMuted, fontStyle: "italic" }}>
               Growing beyond them.
             </span>
           </motion.p>

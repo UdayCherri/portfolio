@@ -1,10 +1,15 @@
 import { motion } from "motion/react";
 import { openSourceRepos } from "../../data/content";
 import { Star, ArrowUpRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function SpyOpenSource() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
+
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#080C18" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, x: -12 }}
@@ -15,10 +20,10 @@ export default function SpyOpenSource() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#CC1234",
+              color: theme.accent,
               marginBottom: "0.75rem",
             }}
           >
@@ -29,7 +34,7 @@ export default function SpyOpenSource() {
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "clamp(2rem, 5vw, 4rem)",
               fontWeight: 700,
-              color: "#F0EEE5",
+              color: theme.fg,
               textTransform: "uppercase",
               letterSpacing: "-0.02em",
             }}
@@ -54,13 +59,13 @@ export default function SpyOpenSource() {
                 gap: "2rem",
                 alignItems: "center",
                 padding: "2rem 1.5rem",
-                border: "1px solid rgba(240,238,229,0.04)",
+                border: `1px solid ${theme.borderSubtle}`,
                 textDecoration: "none",
                 transition: "all 0.2s ease",
               }}
               whileHover={{
-                backgroundColor: "rgba(204,18,52,0.04)",
-                borderColor: "rgba(204,18,52,0.15)",
+                backgroundColor: mode === "dark" ? "rgba(204,18,52,0.04)" : "rgba(204,18,52,0.03)",
+                borderColor: mode === "dark" ? "rgba(204,18,52,0.18)" : "rgba(204,18,52,0.2)",
               }}
             >
               <div>
@@ -70,7 +75,7 @@ export default function SpyOpenSource() {
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: "1rem",
                       fontWeight: 500,
-                      color: "#F0EEE5",
+                      color: theme.fg,
                     }}
                   >
                     {repo.name}
@@ -79,9 +84,9 @@ export default function SpyOpenSource() {
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: "0.6rem",
-                      color: "#CC1234",
+                      color: theme.accent,
                       padding: "0.15rem 0.5rem",
-                      border: "1px solid rgba(204,18,52,0.3)",
+                      border: `1px solid ${theme.accent}44`,
                     }}
                   >
                     {repo.language}
@@ -90,8 +95,8 @@ export default function SpyOpenSource() {
                 <p
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "rgba(240,238,229,0.4)",
+                    fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                    color: theme.fgMuted,
                     lineHeight: 1.5,
                   }}
                 >
@@ -100,18 +105,18 @@ export default function SpyOpenSource() {
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", flexShrink: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  <Star size={12} strokeWidth={1.5} color="rgba(240,238,229,0.35)" />
+                  <Star size={12} strokeWidth={1.5} color={theme.fgMuted} />
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: "0.75rem",
-                      color: "rgba(240,238,229,0.35)",
+                      color: theme.fgMuted,
                     }}
                   >
                     {repo.stars.toLocaleString()}
                   </span>
                 </div>
-                <ArrowUpRight size={14} strokeWidth={1.5} color="rgba(240,238,229,0.3)" />
+                <ArrowUpRight size={14} strokeWidth={1.5} color={theme.fgMuted} />
               </div>
             </motion.a>
           ))}

@@ -3,18 +3,20 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { useIsMd } from "../shared/useMediaQuery";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 const identities = [
   {
     id: "yuukaycee",
     path: "/yuukaycee",
     name: "YuuKayCee",
-    archetype: "The Creator",
+    archetype: "The Prism",
     motto: "Designing connections between people, ideas, and worlds.",
     discipline: "Design",
-    bg: "#0C0A15",
-    accent: "#A78BFA",
-    secondary: "#67E8F9",
+    bg: "#080A12",
+    accent: "#67E8F9",
+    secondary: "#FDBA8C",
     font: "'Playfair Display', serif",
     description: "Brand identity, UI/UX, editorial design, and creative direction.",
     preview: [
@@ -68,18 +70,21 @@ export function IdentityDiscovery() {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
   const isMd = useIsMd();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
 
   return (
     <section
       style={{
-        background: "#F7F4EE",
+        background: theme.bg,
+        transition: "background 0.4s ease",
       }}
     >
       {/* Transition text — bridges from understanding to choosing */}
       <div
         style={{
           padding: "8rem clamp(2rem, 8vw, 8rem) 6rem",
-          borderTop: "1px solid rgba(28,28,28,0.08)",
+          borderTop: `1px solid ${theme.borderSubtle}`,
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -102,7 +107,7 @@ export function IdentityDiscovery() {
                   fontSize: "0.65rem",
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
-                  color: "#B8A46A",
+                  color: theme.accent,
                   marginBottom: "1rem",
                 }}
               >
@@ -117,7 +122,7 @@ export function IdentityDiscovery() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "clamp(2rem, 4vw, 3.5rem)",
                   fontWeight: 300,
-                  color: "#1C1C1C",
+                  color: theme.fg,
                   lineHeight: 1.15,
                 }}
               >
@@ -132,9 +137,9 @@ export function IdentityDiscovery() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 fontFamily: "'Inter', sans-serif",
-                fontSize: "0.9rem",
+                fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
                 lineHeight: 1.75,
-                color: "#6B6B6B",
+                color: theme.fgMuted,
                 maxWidth: "440px",
               }}
             >
@@ -212,7 +217,7 @@ export function IdentityDiscovery() {
               <p
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.58rem",
+                  fontSize: "0.6rem",
                   letterSpacing: "0.3em",
                   textTransform: "uppercase",
                   color: identity.accent,
@@ -299,7 +304,7 @@ export function IdentityDiscovery() {
                     key={item.label}
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.58rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",
                       padding: "0.3rem 0.75rem",

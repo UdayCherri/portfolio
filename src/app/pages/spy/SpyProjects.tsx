@@ -2,12 +2,18 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { ArrowRight } from "lucide-react";
 import { spyProjects } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
+import { useIsDesktop } from "../../components/shared/useMediaQuery";
 
 export default function SpyProjects() {
   const navigate = useNavigate();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
+  const isDesktop = useIsDesktop();
 
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#080C18" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, x: -12 }}
@@ -18,10 +24,10 @@ export default function SpyProjects() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#CC1234",
+              color: theme.accent,
               marginBottom: "0.75rem",
             }}
           >
@@ -32,7 +38,7 @@ export default function SpyProjects() {
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "clamp(2rem, 5vw, 4rem)",
               fontWeight: 700,
-              color: "#F0EEE5",
+              color: theme.fg,
               textTransform: "uppercase",
               letterSpacing: "-0.02em",
             }}
@@ -50,27 +56,27 @@ export default function SpyProjects() {
               transition={{ duration: 0.25, delay: i * 0.05 }}
               onClick={() => navigate(`/project/${project.id}`)}
               style={{
-                display: "grid",
-                gridTemplateColumns: "60px 1fr 200px 40px",
-                gap: "2rem",
-                alignItems: "center",
-                padding: "2rem 1.5rem",
-                border: "1px solid rgba(240,238,229,0.04)",
+                display: isDesktop ? "grid" : "flex",
+                gridTemplateColumns: isDesktop ? "60px 1fr 200px 40px" : undefined,
+                flexDirection: isDesktop ? undefined : "column",
+                gap: isDesktop ? "2rem" : "0.75rem",
+                alignItems: isDesktop ? "center" : "flex-start",
+                padding: "1.75rem 1.25rem",
+                border: `1px solid ${theme.borderSubtle}`,
                 cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
               whileHover={{
-                backgroundColor: "rgba(204,18,52,0.04)",
-                borderColor: "rgba(204,18,52,0.15)",
+                backgroundColor: mode === "dark" ? "rgba(204,18,52,0.04)" : "rgba(204,18,52,0.03)",
+                borderColor: mode === "dark" ? "rgba(204,18,52,0.18)" : "rgba(204,18,52,0.2)",
               }}
-              className="grid-cols-1 lg:grid-cols-[60px_1fr_200px_40px]"
             >
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
                   fontSize: "0.7rem",
-                  color: "#CC1234",
-                  opacity: 0.6,
+                  color: theme.accent,
+                  opacity: 0.7,
                 }}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -81,7 +87,7 @@ export default function SpyProjects() {
                     fontFamily: "'Space Grotesk', sans-serif",
                     fontSize: "1.05rem",
                     fontWeight: 600,
-                    color: "#F0EEE5",
+                    color: theme.fg,
                     marginBottom: "0.25rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.02em",
@@ -92,8 +98,8 @@ export default function SpyProjects() {
                 <p
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "0.8rem",
-                    color: "rgba(240,238,229,0.35)",
+                    fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                    color: theme.fgMuted,
                   }}
                 >
                   {project.subtitle}
@@ -105,18 +111,18 @@ export default function SpyProjects() {
                     key={tag}
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.08em",
                       padding: "0.2rem 0.5rem",
-                      border: "1px solid rgba(240,238,229,0.08)",
-                      color: "rgba(240,238,229,0.35)",
+                      border: `1px solid ${theme.borderSubtle}`,
+                      color: theme.fgMuted,
                     }}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <ArrowRight size={14} strokeWidth={1.5} color="rgba(240,238,229,0.2)" />
+              <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} />
             </motion.div>
           ))}
         </div>

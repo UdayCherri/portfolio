@@ -1,11 +1,18 @@
 import { motion } from "motion/react";
 import { yuukayceeProjects } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
+import { useIsMd } from "../../components/shared/useMediaQuery";
 
 const archive = yuukayceeProjects.filter((p) => !p.featured);
 
 export default function YuuKayCeeArchive() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("yuukaycee", mode);
+  const isMd = useIsMd();
+
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#0C0A15" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -19,7 +26,7 @@ export default function YuuKayCeeArchive() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#A78BFA",
+              color: theme.accent,
               marginBottom: "1rem",
             }}
           >
@@ -30,7 +37,7 @@ export default function YuuKayCeeArchive() {
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: 400,
-              color: "#EEE9F8",
+              color: theme.fg,
               lineHeight: 1.1,
             }}
           >
@@ -39,8 +46,8 @@ export default function YuuKayCeeArchive() {
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.95rem",
-              color: "rgba(238,233,248,0.4)",
+              fontSize: "clamp(0.875rem, 2vw, 0.95rem)",
+              color: theme.fgMuted,
               marginTop: "1.5rem",
               lineHeight: 1.7,
               maxWidth: "520px",
@@ -59,12 +66,13 @@ export default function YuuKayCeeArchive() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               style={{
-                display: "grid",
-                gridTemplateColumns: "60px 1fr 80px",
-                gap: "2rem",
-                alignItems: "center",
+                display: isMd ? "grid" : "flex",
+                gridTemplateColumns: isMd ? "60px 1fr 80px" : undefined,
+                flexDirection: isMd ? undefined : "column",
+                gap: isMd ? "2rem" : "0.5rem",
+                alignItems: isMd ? "center" : "flex-start",
                 padding: "1.75rem 0",
-                borderBottom: "1px solid rgba(167,139,250,0.06)",
+                borderBottom: `1px solid ${theme.borderSubtle}`,
                 cursor: "default",
               }}
             >
@@ -73,7 +81,8 @@ export default function YuuKayCeeArchive() {
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.6rem",
                   letterSpacing: "0.15em",
-                  color: "rgba(238,233,248,0.3)",
+                  color: theme.fgMuted,
+                  opacity: 0.65,
                 }}
               >
                 {project.year}
@@ -84,7 +93,7 @@ export default function YuuKayCeeArchive() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: "1.15rem",
                     fontWeight: 400,
-                    color: "#EEE9F8",
+                    color: theme.fg,
                     marginBottom: "0.25rem",
                   }}
                 >
@@ -93,8 +102,8 @@ export default function YuuKayCeeArchive() {
                 <p
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.8rem",
-                    color: "rgba(238,233,248,0.35)",
+                    fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                    color: theme.fgMuted,
                   }}
                 >
                   {project.subtitle}

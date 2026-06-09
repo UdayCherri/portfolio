@@ -1,11 +1,22 @@
 import { CoreNav } from "../../components/core/CoreNav";
 import { motion } from "motion/react";
 import { Mail, ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function CoreContact() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
+
   return (
     <div
-      style={{ background: "#F7F4EE", minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        background: theme.bg,
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        transition: "background 0.4s ease, color 0.4s ease",
+      }}
     >
       <CoreNav />
       <div
@@ -28,7 +39,7 @@ export default function CoreContact() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#B8A46A",
+              color: theme.accent,
               marginBottom: "2rem",
             }}
           >
@@ -43,7 +54,7 @@ export default function CoreContact() {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
               fontWeight: 300,
-              color: "#1C1C1C",
+              color: theme.fg,
               lineHeight: 1.1,
               marginBottom: "3rem",
             }}
@@ -57,9 +68,9 @@ export default function CoreContact() {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: "1rem",
+              fontSize: "clamp(0.9rem, 1.8vw, 1rem)",
               lineHeight: 1.8,
-              color: "#6B6B6B",
+              color: theme.fgMuted,
               marginBottom: "4rem",
             }}
           >
@@ -80,40 +91,34 @@ export default function CoreContact() {
                 alignItems: "center",
                 gap: "1rem",
                 textDecoration: "none",
-                color: "#1C1C1C",
+                color: theme.fg,
                 padding: "1.5rem 2rem",
-                border: "1px solid rgba(28,28,28,0.12)",
+                border: `1px solid ${theme.borderSubtle}`,
                 transition: "border-color 0.3s ease, background 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#B8A46A";
-                e.currentTarget.style.background = "rgba(184,164,106,0.04)";
+                e.currentTarget.style.borderColor = theme.accent;
+                e.currentTarget.style.background = theme.accent + "08";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(28,28,28,0.12)";
+                e.currentTarget.style.borderColor = theme.borderSubtle;
                 e.currentTarget.style.background = "transparent";
               }}
             >
-              <Mail size={16} strokeWidth={1.5} color="#B8A46A" />
+              <Mail size={16} strokeWidth={1.5} color={theme.accent} />
               <span
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: "0.9rem",
+                  fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
                   letterSpacing: "0.05em",
                 }}
               >
                 uday@udaycherri.com
               </span>
-              <ArrowRight size={14} strokeWidth={1.5} style={{ marginLeft: "auto" }} />
+              <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
             </a>
 
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-                flexWrap: "wrap",
-              }}
-            >
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {["GitHub", "LinkedIn", "Twitter"].map((platform) => (
                 <a
                   key={platform}
@@ -123,19 +128,19 @@ export default function CoreContact() {
                     fontSize: "0.65rem",
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "#6B6B6B",
+                    color: theme.fgMuted,
                     textDecoration: "none",
                     padding: "0.6rem 1.25rem",
-                    border: "1px solid rgba(28,28,28,0.1)",
+                    border: `1px solid ${theme.borderSubtle}`,
                     transition: "color 0.2s ease, border-color 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#1C1C1C";
-                    e.currentTarget.style.borderColor = "rgba(28,28,28,0.3)";
+                    e.currentTarget.style.color = theme.fg;
+                    e.currentTarget.style.borderColor = theme.accent;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "#6B6B6B";
-                    e.currentTarget.style.borderColor = "rgba(28,28,28,0.1)";
+                    e.currentTarget.style.color = theme.fgMuted;
+                    e.currentTarget.style.borderColor = theme.borderSubtle;
                   }}
                 >
                   {platform}

@@ -1,9 +1,16 @@
 import { motion } from "motion/react";
 import { securityProjects } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
+import { useIsMd } from "../../components/shared/useMediaQuery";
 
 export default function CyberSecurityProjects() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("cyb3r", mode);
+  const isMd = useIsMd();
+
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#0F1318" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0 }}
@@ -14,9 +21,10 @@ export default function CyberSecurityProjects() {
           <p
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.2em",
-              color: "rgba(16,185,129,0.5)",
+              color: theme.accent,
+              opacity: 0.65,
               marginBottom: "1rem",
             }}
           >
@@ -27,7 +35,7 @@ export default function CyberSecurityProjects() {
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: "clamp(2rem, 5vw, 3.5rem)",
               fontWeight: 500,
-              color: "#E2EAF0",
+              color: theme.fg,
               letterSpacing: "-0.02em",
             }}
           >
@@ -38,11 +46,10 @@ export default function CyberSecurityProjects() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateColumns: isMd ? "repeat(2, 1fr)" : "1fr",
             gap: "1px",
-            background: "rgba(16,185,129,0.06)",
+            background: theme.borderSubtle,
           }}
-          className="grid-cols-1 md:grid-cols-2"
         >
           {securityProjects.map((project, i) => (
             <motion.div
@@ -52,30 +59,30 @@ export default function CyberSecurityProjects() {
               transition={{ duration: 0.3, delay: i * 0.07 }}
               style={{
                 padding: "2.5rem",
-                background: "#0F1318",
+                background: theme.bg,
                 borderTop: "2px solid transparent",
                 transition: "all 0.2s ease",
                 cursor: "default",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.borderTopColor = "#10B981";
-                el.style.background = "rgba(16,185,129,0.03)";
+                el.style.borderTopColor = theme.accent;
+                el.style.background = theme.accent + "05";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.borderTopColor = "transparent";
-                el.style.background = "#0F1318";
+                el.style.background = theme.bg;
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
                 <span
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "0.55rem",
+                    fontSize: "0.6rem",
                     letterSpacing: "0.15em",
-                    color: "#10B981",
-                    opacity: 0.6,
+                    color: theme.accent,
+                    opacity: 0.7,
                   }}
                 >
                   [{project.category.toUpperCase()}]
@@ -83,9 +90,10 @@ export default function CyberSecurityProjects() {
                 <span
                   style={{
                     fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: "0.55rem",
-                    color: "rgba(226,234,240,0.25)",
+                    fontSize: "0.6rem",
+                    color: theme.fgMuted,
                     letterSpacing: "0.1em",
+                    opacity: 0.55,
                   }}
                 >
                   {project.year}
@@ -97,7 +105,7 @@ export default function CyberSecurityProjects() {
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: "1.1rem",
                   fontWeight: 500,
-                  color: "#E2EAF0",
+                  color: theme.fg,
                   marginBottom: "0.5rem",
                   lineHeight: 1.3,
                 }}
@@ -109,9 +117,10 @@ export default function CyberSecurityProjects() {
                 style={{
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: "0.7rem",
-                  color: "rgba(45,212,191,0.6)",
+                  color: theme.accentSecondary,
                   marginBottom: "1rem",
                   letterSpacing: "0.05em",
+                  opacity: 0.75,
                 }}
               >
                 {project.subtitle}
@@ -120,8 +129,8 @@ export default function CyberSecurityProjects() {
               <p
                 style={{
                   fontFamily: "'IBM Plex Sans', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "rgba(226,234,240,0.45)",
+                  fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                  color: theme.fgMuted,
                   lineHeight: 1.65,
                   marginBottom: "1.5rem",
                 }}
@@ -135,11 +144,12 @@ export default function CyberSecurityProjects() {
                     key={tag}
                     style={{
                       fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.6rem",
                       letterSpacing: "0.06em",
                       padding: "0.2rem 0.5rem",
-                      border: "1px solid rgba(16,185,129,0.12)",
-                      color: "rgba(16,185,129,0.45)",
+                      border: `1px solid ${theme.borderSubtle}`,
+                      color: theme.accent,
+                      opacity: 0.65,
                     }}
                   >
                     {tag}

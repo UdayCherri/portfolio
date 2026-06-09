@@ -1,5 +1,8 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router";
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from "react-router";
 import { useEffect, useState } from "react";
+
+// Theme
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 // Core
 import { ArrivalScreen } from "./components/core/ArrivalScreen";
@@ -39,7 +42,16 @@ import CyberContact from "./pages/cyb3r/CyberContact";
 // Shared
 import ProjectPage from "./pages/project/ProjectPage";
 
-// Core wrapper with arrival screen
+// Core layout wrapper — provides ThemeContext for all Core routes
+function CoreLayout() {
+  return (
+    <ThemeProvider identity="core">
+      <Outlet />
+    </ThemeProvider>
+  );
+}
+
+// Core home with arrival screen
 function CoreWrapper() {
   const [showArrival, setShowArrival] = useState(() => {
     try {
@@ -52,9 +64,7 @@ function CoreWrapper() {
   const handleArrivalComplete = () => {
     try {
       sessionStorage.setItem("arrival_seen", "1");
-    } catch {
-      // ignore
-    }
+    } catch {}
     setShowArrival(false);
   };
 
@@ -72,11 +82,13 @@ function CoreWrapper() {
 function AppRoutes() {
   return (
     <Routes>
-      {/* Core */}
-      <Route path="/" element={<CoreWrapper />} />
-      <Route path="/journey" element={<CoreJourney />} />
-      <Route path="/work" element={<CoreWork />} />
-      <Route path="/contact" element={<CoreContact />} />
+      {/* Core — all wrapped in CoreLayout for ThemeContext */}
+      <Route element={<CoreLayout />}>
+        <Route path="/" element={<CoreWrapper />} />
+        <Route path="/journey" element={<CoreJourney />} />
+        <Route path="/work" element={<CoreWork />} />
+        <Route path="/contact" element={<CoreContact />} />
+      </Route>
 
       {/* YuuKayCee */}
       <Route path="/yuukaycee" element={<YuuKayCeeLayout />}>

@@ -2,14 +2,18 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { spyProjects } from "../../data/content";
 import { ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 const experiments = spyProjects.filter((p) => p.category === "Experiments");
 
 export default function SpyExperiments() {
   const navigate = useNavigate();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
 
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#080C18" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, x: -12 }}
@@ -20,10 +24,10 @@ export default function SpyExperiments() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#CC1234",
+              color: theme.accent,
               marginBottom: "0.75rem",
             }}
           >
@@ -34,7 +38,7 @@ export default function SpyExperiments() {
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "clamp(2rem, 5vw, 4rem)",
               fontWeight: 700,
-              color: "#F0EEE5",
+              color: theme.fg,
               textTransform: "uppercase",
               letterSpacing: "-0.02em",
             }}
@@ -44,8 +48,8 @@ export default function SpyExperiments() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.9rem",
-              color: "rgba(240,238,229,0.4)",
+              fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
+              color: theme.fgMuted,
               marginTop: "1rem",
               lineHeight: 1.7,
               maxWidth: "480px",
@@ -66,17 +70,19 @@ export default function SpyExperiments() {
                 onClick={() => navigate(`/project/${exp.id}`)}
                 style={{
                   padding: "2.5rem",
-                  border: "1px solid rgba(240,238,229,0.04)",
+                  border: `1px solid ${theme.borderSubtle}`,
                   cursor: "pointer",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "rgba(204,18,52,0.04)";
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(204,18,52,0.15)";
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.background = mode === "dark" ? "rgba(204,18,52,0.04)" : "rgba(204,18,52,0.03)";
+                  el.style.borderColor = mode === "dark" ? "rgba(204,18,52,0.2)" : "rgba(204,18,52,0.18)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "transparent";
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(240,238,229,0.04)";
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.background = "transparent";
+                  el.style.borderColor = theme.borderSubtle;
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -86,7 +92,7 @@ export default function SpyExperiments() {
                         fontFamily: "'Space Grotesk', sans-serif",
                         fontSize: "1.2rem",
                         fontWeight: 600,
-                        color: "#F0EEE5",
+                        color: theme.fg,
                         textTransform: "uppercase",
                         letterSpacing: "0.02em",
                         marginBottom: "0.5rem",
@@ -97,8 +103,8 @@ export default function SpyExperiments() {
                     <p
                       style={{
                         fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: "0.85rem",
-                        color: "rgba(240,238,229,0.4)",
+                        fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                        color: theme.fgMuted,
                         marginBottom: "1rem",
                       }}
                     >
@@ -107,8 +113,8 @@ export default function SpyExperiments() {
                     <p
                       style={{
                         fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: "0.85rem",
-                        color: "rgba(240,238,229,0.5)",
+                        fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                        color: theme.fgMuted,
                         lineHeight: 1.65,
                         maxWidth: "600px",
                       }}
@@ -116,13 +122,12 @@ export default function SpyExperiments() {
                       {exp.overview}
                     </p>
                   </div>
-                  <ArrowRight size={14} strokeWidth={1.5} color="rgba(240,238,229,0.3)" style={{ marginLeft: "2rem", flexShrink: 0 }} />
+                  <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "2rem", flexShrink: 0 }} />
                 </div>
               </motion.div>
             ))}
           </div>
         ) : (
-          /* Fallback: show the language experiment */
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -130,15 +135,15 @@ export default function SpyExperiments() {
             onClick={() => navigate("/project/prism-lang")}
             style={{
               padding: "3rem",
-              border: "1px solid rgba(240,238,229,0.06)",
+              border: `1px solid ${theme.borderSubtle}`,
               cursor: "pointer",
             }}
           >
             <p
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.6rem",
-                color: "#CC1234",
+                fontSize: "0.65rem",
+                color: theme.accent,
                 marginBottom: "1rem",
                 opacity: 0.7,
               }}
@@ -150,7 +155,7 @@ export default function SpyExperiments() {
                 fontFamily: "'Space Grotesk', sans-serif",
                 fontSize: "1.4rem",
                 fontWeight: 600,
-                color: "#F0EEE5",
+                color: theme.fg,
                 textTransform: "uppercase",
                 marginBottom: "0.5rem",
               }}
@@ -160,8 +165,8 @@ export default function SpyExperiments() {
             <p
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "0.85rem",
-                color: "rgba(240,238,229,0.4)",
+                fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                color: theme.fgMuted,
               }}
             >
               Declarative DSL for data transformation. Compiles to Rust.

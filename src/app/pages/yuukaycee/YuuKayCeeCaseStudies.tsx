@@ -2,14 +2,18 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { yuukayceeProjects } from "../../data/content";
 import { ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 const caseStudies = yuukayceeProjects.filter((p) => p.featured);
 
 export default function YuuKayCeeCaseStudies() {
   const navigate = useNavigate();
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("yuukaycee", mode);
 
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#0C0A15" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -23,7 +27,7 @@ export default function YuuKayCeeCaseStudies() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#A78BFA",
+              color: theme.accent,
               marginBottom: "1rem",
             }}
           >
@@ -34,7 +38,7 @@ export default function YuuKayCeeCaseStudies() {
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: 400,
-              color: "#EEE9F8",
+              color: theme.fg,
               lineHeight: 1.1,
             }}
           >
@@ -43,8 +47,8 @@ export default function YuuKayCeeCaseStudies() {
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.95rem",
-              color: "rgba(238,233,248,0.45)",
+              fontSize: "clamp(0.875rem, 2vw, 0.95rem)",
+              color: theme.fgMuted,
               marginTop: "1.5rem",
               lineHeight: 1.7,
               maxWidth: "520px",
@@ -64,106 +68,110 @@ export default function YuuKayCeeCaseStudies() {
               onClick={() => navigate(`/project/${project.id}`)}
               style={{
                 display: "grid",
-                gridTemplateColumns: "280px 1fr auto",
-                gap: "3rem",
+                gridTemplateColumns: "1fr auto",
+                gap: "2rem",
                 alignItems: "center",
-                padding: "3rem 2rem",
-                border: "1px solid rgba(167,139,250,0.08)",
+                padding: "2.5rem 1.5rem",
+                border: `1px solid ${theme.borderSubtle}`,
                 cursor: "pointer",
                 transition: "border-color 0.3s ease, background 0.3s ease",
               }}
               whileHover={{
-                backgroundColor: "rgba(167,139,250,0.04)",
+                backgroundColor: mode === "dark" ? "rgba(103,232,249,0.03)" : "rgba(8,145,178,0.03)",
               }}
-              className="grid-cols-1 lg:grid-cols-[280px_1fr_auto]"
             >
-              <div
-                style={{
-                  height: "180px",
-                  background: project.coverColor + "15",
-                  position: "relative",
-                  overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <span
+              <div style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
+                <div
                   style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "4rem",
-                    color: project.coverColor,
-                    opacity: 0.12,
-                    userSelect: "none",
+                    width: "180px",
+                    height: "120px",
+                    background: project.coverColor + "15",
+                    position: "relative",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
                   }}
                 >
-                  {project.title.slice(0, 2)}
-                </span>
-              </div>
-              <div>
-                <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "0.75rem" }}>
                   <span
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.6rem",
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "3.5rem",
                       color: project.coverColor,
+                      opacity: 0.12,
+                      userSelect: "none",
                     }}
                   >
-                    {project.category}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.6rem",
-                      color: "rgba(238,233,248,0.3)",
-                    }}
-                  >
-                    {project.year}
+                    {project.title.slice(0, 2)}
                   </span>
                 </div>
-                <h2
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "1.8rem",
-                    fontWeight: 400,
-                    color: "#EEE9F8",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  {project.title}
-                </h2>
-                <p
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "rgba(238,233,248,0.5)",
-                    lineHeight: 1.6,
-                    marginBottom: "1rem",
-                  }}
-                >
-                  {project.overview}
-                </p>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                  {project.tags.map((tag) => (
+                <div style={{ flex: 1, minWidth: "200px" }}>
+                  <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "0.75rem" }}>
                     <span
-                      key={tag}
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.6rem",
-                        letterSpacing: "0.1em",
-                        padding: "0.2rem 0.6rem",
-                        border: "1px solid rgba(167,139,250,0.2)",
-                        color: "rgba(238,233,248,0.4)",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        color: project.coverColor,
                       }}
                     >
-                      {tag}
+                      {project.category}
                     </span>
-                  ))}
+                    <span
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.6rem",
+                        color: theme.fgMuted,
+                        opacity: 0.7,
+                      }}
+                    >
+                      {project.year}
+                    </span>
+                  </div>
+                  <h2
+                    style={{
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)",
+                      fontWeight: 400,
+                      color: theme.fg,
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {project.title}
+                  </h2>
+                  <p
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "clamp(0.8rem, 1.8vw, 0.875rem)",
+                      color: theme.fgMuted,
+                      lineHeight: 1.6,
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    {project.overview}
+                  </p>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          fontFamily: "'DM Sans', sans-serif",
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.1em",
+                          padding: "0.2rem 0.6rem",
+                          border: `1px solid ${theme.borderSubtle}`,
+                          color: theme.fgMuted,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <ArrowRight size={16} strokeWidth={1.5} color="rgba(238,233,248,0.3)" />
+              <ArrowRight size={16} strokeWidth={1.5} color={theme.fgMuted} />
             </motion.div>
           ))}
         </div>

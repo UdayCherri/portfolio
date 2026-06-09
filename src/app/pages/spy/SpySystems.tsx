@@ -1,9 +1,17 @@
 import { motion } from "motion/react";
 import { spySystems } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
+import { useIsDesktop, useIsMd } from "../../components/shared/useMediaQuery";
 
 export default function SpySystems() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
+  const isDesktop = useIsDesktop();
+  const isMd = useIsMd();
+
   return (
-    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "#080C18" }}>
+    <div style={{ padding: "4rem clamp(2rem, 6vw, 6rem)", minHeight: "100vh", background: "transparent" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, x: -12 }}
@@ -14,10 +22,10 @@ export default function SpySystems() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.6rem",
+              fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#CC1234",
+              color: theme.accent,
               marginBottom: "0.75rem",
             }}
           >
@@ -28,7 +36,7 @@ export default function SpySystems() {
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: "clamp(2rem, 5vw, 4rem)",
               fontWeight: 700,
-              color: "#F0EEE5",
+              color: theme.fg,
               textTransform: "uppercase",
               letterSpacing: "-0.02em",
               marginBottom: "1rem",
@@ -39,8 +47,8 @@ export default function SpySystems() {
           <p
             style={{
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.9rem",
-              color: "rgba(240,238,229,0.4)",
+              fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
+              color: theme.fgMuted,
               lineHeight: 1.7,
               maxWidth: "500px",
             }}
@@ -52,11 +60,10 @@ export default function SpySystems() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: isDesktop ? "repeat(3, 1fr)" : isMd ? "repeat(2, 1fr)" : "1fr",
             gap: "1px",
-            background: "rgba(240,238,229,0.04)",
+            background: theme.borderSubtle,
           }}
-          className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         >
           {spySystems.map((system, i) => (
             <motion.div
@@ -66,12 +73,12 @@ export default function SpySystems() {
               transition={{ duration: 0.3, delay: i * 0.08 }}
               style={{
                 padding: "2.5rem",
-                background: "#080C18",
+                background: theme.bg,
                 borderTop: "2px solid transparent",
-                transition: "border-color 0.2s ease",
+                transition: "border-color 0.2s ease, background 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderTopColor = "#CC1234";
+                (e.currentTarget as HTMLDivElement).style.borderTopColor = theme.accent;
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderTopColor = "transparent";
@@ -88,9 +95,9 @@ export default function SpySystems() {
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.55rem",
+                    fontSize: "0.6rem",
                     letterSpacing: "0.15em",
-                    color: "#CC1234",
+                    color: theme.accent,
                     opacity: 0.7,
                   }}
                 >
@@ -99,12 +106,12 @@ export default function SpySystems() {
                 <span
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "0.55rem",
+                    fontSize: "0.6rem",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     padding: "0.2rem 0.5rem",
-                    border: `1px solid ${system.status === "Production" ? "rgba(204,18,52,0.3)" : "rgba(240,238,229,0.1)"}`,
-                    color: system.status === "Production" ? "#CC1234" : "rgba(240,238,229,0.35)",
+                    border: `1px solid ${system.status === "Production" ? theme.accent + "44" : theme.borderSubtle}`,
+                    color: system.status === "Production" ? theme.accent : theme.fgMuted,
                   }}
                 >
                   {system.status}
@@ -115,7 +122,7 @@ export default function SpySystems() {
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: "1.1rem",
                   fontWeight: 600,
-                  color: "#F0EEE5",
+                  color: theme.fg,
                   marginBottom: "1rem",
                   textTransform: "uppercase",
                   letterSpacing: "0.02em",
@@ -127,8 +134,8 @@ export default function SpySystems() {
               <p
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "0.85rem",
-                  color: "rgba(240,238,229,0.4)",
+                  fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                  color: theme.fgMuted,
                   lineHeight: 1.65,
                   marginBottom: "1.5rem",
                 }}
@@ -143,9 +150,9 @@ export default function SpySystems() {
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: "0.6rem",
                       padding: "0.2rem 0.5rem",
-                      background: "rgba(240,238,229,0.03)",
-                      border: "1px solid rgba(240,238,229,0.06)",
-                      color: "rgba(240,238,229,0.4)",
+                      background: mode === "dark" ? "rgba(240,238,229,0.03)" : "rgba(28,12,24,0.03)",
+                      border: `1px solid ${theme.borderSubtle}`,
+                      color: theme.fgMuted,
                     }}
                   >
                     {c}

@@ -1,12 +1,17 @@
 import { motion } from "motion/react";
 import { Mail, ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function CyberContact() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("cyb3r", mode);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#0F1318",
+        background: "transparent",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -19,9 +24,10 @@ export default function CyberContact() {
           animate={{ opacity: 1 }}
           style={{
             fontFamily: "'IBM Plex Mono', monospace",
-            fontSize: "0.6rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.2em",
-            color: "rgba(16,185,129,0.5)",
+            color: theme.accent,
+            opacity: 0.65,
             marginBottom: "2rem",
           }}
         >
@@ -36,14 +42,14 @@ export default function CyberContact() {
             fontFamily: "'IBM Plex Mono', monospace",
             fontSize: "clamp(2rem, 5vw, 3.5rem)",
             fontWeight: 500,
-            color: "#E2EAF0",
+            color: theme.fg,
             letterSpacing: "-0.02em",
             lineHeight: 1.15,
             marginBottom: "2rem",
           }}
         >
           Discuss<br />
-          <span style={{ color: "#10B981" }}>responsible research</span>
+          <span style={{ color: theme.accent }}>responsible research</span>
         </motion.h1>
 
         <motion.p
@@ -52,9 +58,9 @@ export default function CyberContact() {
           transition={{ duration: 0.4, delay: 0.15 }}
           style={{
             fontFamily: "'IBM Plex Sans', sans-serif",
-            fontSize: "0.9rem",
+            fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
             lineHeight: 1.75,
-            color: "rgba(226,234,240,0.45)",
+            color: theme.fgMuted,
             marginBottom: "3rem",
           }}
         >
@@ -75,49 +81,49 @@ export default function CyberContact() {
               alignItems: "center",
               gap: "1rem",
               textDecoration: "none",
-              color: "#E2EAF0",
+              color: theme.fg,
               padding: "1.25rem 2rem",
-              border: "1px solid rgba(16,185,129,0.15)",
+              border: `1px solid ${theme.borderSubtle}`,
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(16,185,129,0.04)";
-              e.currentTarget.style.borderColor = "rgba(16,185,129,0.4)";
+              e.currentTarget.style.background = theme.accent + "06";
+              e.currentTarget.style.borderColor = theme.accent + "55";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = "rgba(16,185,129,0.15)";
+              e.currentTarget.style.borderColor = theme.borderSubtle;
             }}
           >
-            <Mail size={14} strokeWidth={1.5} color="#10B981" />
-            <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem" }}>
+            <Mail size={14} strokeWidth={1.5} color={theme.accent} />
+            <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "clamp(0.75rem, 1.5vw, 0.8rem)" }}>
               cyb3r@udaycherri.com
             </span>
-            <ArrowRight size={12} strokeWidth={1.5} style={{ marginLeft: "auto" }} />
+            <ArrowRight size={12} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {["GitHub", "Keybase", "HackTheBox"].map((platform) => (
               <a
                 key={platform}
                 href="#"
                 style={{
                   fontFamily: "'IBM Plex Mono', monospace",
-                  fontSize: "0.6rem",
+                  fontSize: "0.65rem",
                   letterSpacing: "0.1em",
-                  color: "rgba(226,234,240,0.3)",
+                  color: theme.fgMuted,
                   textDecoration: "none",
                   padding: "0.5rem 1rem",
-                  border: "1px solid rgba(16,185,129,0.1)",
+                  border: `1px solid ${theme.borderSubtle}`,
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#10B981";
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.35)";
+                  e.currentTarget.style.color = theme.accent;
+                  e.currentTarget.style.borderColor = theme.accent + "44";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(226,234,240,0.3)";
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.1)";
+                  e.currentTarget.style.color = theme.fgMuted;
+                  e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
                 {platform}

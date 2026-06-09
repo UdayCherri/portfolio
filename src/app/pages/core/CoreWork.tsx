@@ -1,16 +1,21 @@
 import { CoreNav } from "../../components/core/CoreNav";
 import { FeaturedWork } from "../../components/core/FeaturedWork";
 import { motion } from "motion/react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function CoreWork() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("core", mode);
+
   return (
-    <div style={{ background: "#F7F4EE", minHeight: "100vh" }}>
+    <div style={{ background: theme.bg, minHeight: "100vh", transition: "background 0.4s ease, color 0.4s ease" }}>
       <CoreNav />
       <div style={{ paddingTop: "100px" }}>
         <div
           style={{
             padding: "6rem clamp(2rem, 8vw, 8rem) 0",
-            borderBottom: "1px solid rgba(28,28,28,0.08)",
+            borderBottom: `1px solid ${theme.borderSubtle}`,
           }}
         >
           <motion.h1
@@ -21,7 +26,7 @@ export default function CoreWork() {
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(3rem, 6vw, 5rem)",
               fontWeight: 300,
-              color: "#1C1C1C",
+              color: theme.fg,
               lineHeight: 1.1,
             }}
           >
@@ -33,8 +38,8 @@ export default function CoreWork() {
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: "0.9rem",
-              color: "#6B6B6B",
+              fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
+              color: theme.fgMuted,
               marginTop: "1rem",
               maxWidth: "480px",
               lineHeight: 1.7,

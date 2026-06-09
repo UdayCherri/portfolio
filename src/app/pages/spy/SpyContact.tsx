@@ -1,12 +1,17 @@
 import { motion } from "motion/react";
 import { Mail, ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function SpyContact() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("spy", mode);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#080C18",
+        background: "transparent",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -20,10 +25,10 @@ export default function SpyContact() {
           transition={{ duration: 0.3 }}
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "0.6rem",
+            fontSize: "0.65rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "#CC1234",
+            color: theme.accent,
             marginBottom: "2rem",
           }}
         >
@@ -38,7 +43,7 @@ export default function SpyContact() {
             fontFamily: "'Space Grotesk', sans-serif",
             fontSize: "clamp(2.2rem, 5vw, 4.5rem)",
             fontWeight: 700,
-            color: "#F0EEE5",
+            color: theme.fg,
             textTransform: "uppercase",
             letterSpacing: "-0.02em",
             lineHeight: 1.0,
@@ -46,7 +51,7 @@ export default function SpyContact() {
           }}
         >
           Build something<br />
-          <span style={{ color: "#CC1234" }}>real.</span>
+          <span style={{ color: theme.accent }}>real.</span>
         </motion.h1>
 
         <motion.p
@@ -55,9 +60,9 @@ export default function SpyContact() {
           transition={{ duration: 0.35, delay: 0.15 }}
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: "0.9rem",
+            fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
             lineHeight: 1.75,
-            color: "rgba(240,238,229,0.45)",
+            color: theme.fgMuted,
             marginBottom: "4rem",
           }}
         >
@@ -78,28 +83,28 @@ export default function SpyContact() {
               alignItems: "center",
               gap: "1rem",
               textDecoration: "none",
-              color: "#F0EEE5",
+              color: theme.fg,
               padding: "1.25rem 2rem",
-              border: "1px solid rgba(204,18,52,0.2)",
+              border: `1px solid ${theme.borderSubtle}`,
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(204,18,52,0.06)";
-              e.currentTarget.style.borderColor = "#CC1234";
+              e.currentTarget.style.background = mode === "dark" ? "rgba(204,18,52,0.06)" : "rgba(204,18,52,0.04)";
+              e.currentTarget.style.borderColor = theme.accent;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.borderColor = "rgba(204,18,52,0.2)";
+              e.currentTarget.style.borderColor = theme.borderSubtle;
             }}
           >
-            <Mail size={14} strokeWidth={1.5} color="#CC1234" />
-            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "0.85rem" }}>
+            <Mail size={14} strokeWidth={1.5} color={theme.accent} />
+            <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)" }}>
               spy@udaycherri.com
             </span>
-            <ArrowRight size={12} strokeWidth={1.5} style={{ marginLeft: "auto" }} />
+            <ArrowRight size={12} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {["GitHub", "Twitter"].map((platform) => (
               <a
                 key={platform}
@@ -110,19 +115,19 @@ export default function SpyContact() {
                   fontWeight: 500,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  color: "rgba(240,238,229,0.35)",
+                  color: theme.fgMuted,
                   textDecoration: "none",
                   padding: "0.5rem 1.25rem",
-                  border: "1px solid rgba(240,238,229,0.08)",
+                  border: `1px solid ${theme.borderSubtle}`,
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#F0EEE5";
-                  e.currentTarget.style.borderColor = "rgba(240,238,229,0.25)";
+                  e.currentTarget.style.color = theme.fg;
+                  e.currentTarget.style.borderColor = mode === "dark" ? "rgba(240,238,229,0.25)" : "rgba(8,12,24,0.3)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(240,238,229,0.35)";
-                  e.currentTarget.style.borderColor = "rgba(240,238,229,0.08)";
+                  e.currentTarget.style.color = theme.fgMuted;
+                  e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
                 {platform}

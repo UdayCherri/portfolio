@@ -1,14 +1,22 @@
 import { motion } from "motion/react";
 import { nyxBureau } from "../../data/content";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
+import { useIsMd, useIsDesktop } from "../../components/shared/useMediaQuery";
 
 export default function YuuKayCeeNYX() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("yuukaycee", mode);
+  const isMd = useIsMd();
+  const isDesktop = useIsDesktop();
+
   return (
-    <div style={{ minHeight: "100vh", background: "#0C0A15" }}>
+    <div style={{ minHeight: "100vh", background: "transparent" }}>
       {/* Hero */}
       <section
         style={{
           padding: "6rem clamp(2rem, 6vw, 6rem)",
-          borderBottom: "1px solid rgba(167,139,250,0.08)",
+          borderBottom: `1px solid ${theme.borderSubtle}`,
           minHeight: "50vh",
           display: "flex",
           alignItems: "flex-end",
@@ -20,7 +28,7 @@ export default function YuuKayCeeNYX() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "radial-gradient(ellipse at 30% 50%, rgba(167,139,250,0.06) 0%, transparent 60%)",
+            background: `radial-gradient(ellipse at 30% 50%, ${mode === "dark" ? "rgba(103,232,249,0.05)" : "rgba(8,145,178,0.04)"} 0%, transparent 60%)`,
           }}
         />
         <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
@@ -33,7 +41,7 @@ export default function YuuKayCeeNYX() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#A78BFA",
+              color: theme.accent,
               marginBottom: "1.5rem",
             }}
           >
@@ -47,7 +55,7 @@ export default function YuuKayCeeNYX() {
               fontFamily: "'Playfair Display', serif",
               fontSize: "clamp(3rem, 7vw, 6rem)",
               fontWeight: 400,
-              color: "#EEE9F8",
+              color: theme.fg,
               lineHeight: 1.05,
               marginBottom: "2rem",
             }}
@@ -60,9 +68,9 @@ export default function YuuKayCeeNYX() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "1.1rem",
+              fontSize: "clamp(0.9rem, 2vw, 1.05rem)",
               lineHeight: 1.75,
-              color: "rgba(238,233,248,0.5)",
+              color: theme.fgMuted,
               maxWidth: "600px",
             }}
           >
@@ -83,7 +91,7 @@ export default function YuuKayCeeNYX() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#A78BFA",
+              color: theme.accent,
               marginBottom: "4rem",
             }}
           >
@@ -92,11 +100,10 @@ export default function YuuKayCeeNYX() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
+              gridTemplateColumns: isMd ? "repeat(2, 1fr)" : "1fr",
               gap: "1px",
-              background: "rgba(167,139,250,0.08)",
+              background: theme.borderSubtle,
             }}
-            className="grid-cols-1 md:grid-cols-2"
           >
             {nyxBureau.services.map((service, i) => (
               <motion.div
@@ -107,7 +114,7 @@ export default function YuuKayCeeNYX() {
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 style={{
                   padding: "3rem",
-                  background: "#0C0A15",
+                  background: theme.bg,
                 }}
               >
                 <p
@@ -116,7 +123,7 @@ export default function YuuKayCeeNYX() {
                     fontSize: "0.6rem",
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "#A78BFA",
+                    color: theme.accent,
                     marginBottom: "1.5rem",
                   }}
                 >
@@ -127,7 +134,7 @@ export default function YuuKayCeeNYX() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: "1.5rem",
                     fontWeight: 400,
-                    color: "#EEE9F8",
+                    color: theme.fg,
                     marginBottom: "1rem",
                   }}
                 >
@@ -136,8 +143,8 @@ export default function YuuKayCeeNYX() {
                 <p
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.9rem",
-                    color: "rgba(238,233,248,0.5)",
+                    fontSize: "clamp(0.875rem, 1.8vw, 0.9rem)",
+                    color: theme.fgMuted,
                     lineHeight: 1.7,
                   }}
                 >
@@ -153,7 +160,7 @@ export default function YuuKayCeeNYX() {
       <section
         style={{
           padding: "8rem clamp(2rem, 6vw, 6rem)",
-          borderTop: "1px solid rgba(167,139,250,0.08)",
+          borderTop: `1px solid ${theme.borderSubtle}`,
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -166,7 +173,7 @@ export default function YuuKayCeeNYX() {
               fontSize: "0.65rem",
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "#A78BFA",
+              color: theme.accent,
               marginBottom: "4rem",
             }}
           >
@@ -175,10 +182,9 @@ export default function YuuKayCeeNYX() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
+              gridTemplateColumns: isDesktop ? "repeat(4, 1fr)" : isMd ? "repeat(2, 1fr)" : "repeat(2, 1fr)",
               gap: "2rem",
             }}
-            className="grid-cols-2 md:grid-cols-4"
           >
             {nyxBureau.process.map((step, i) => (
               <motion.div
@@ -193,7 +199,8 @@ export default function YuuKayCeeNYX() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: "3rem",
                     fontWeight: 300,
-                    color: "rgba(167,139,250,0.15)",
+                    color: theme.accent,
+                    opacity: 0.2,
                     marginBottom: "1rem",
                     lineHeight: 1,
                   }}
@@ -205,7 +212,7 @@ export default function YuuKayCeeNYX() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: "1.2rem",
                     fontWeight: 400,
-                    color: "#EEE9F8",
+                    color: theme.fg,
                     marginBottom: "0.75rem",
                   }}
                 >
@@ -214,8 +221,8 @@ export default function YuuKayCeeNYX() {
                 <p
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "rgba(238,233,248,0.45)",
+                    fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)",
+                    color: theme.fgMuted,
                     lineHeight: 1.6,
                   }}
                 >

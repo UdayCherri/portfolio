@@ -1,12 +1,17 @@
 import { motion } from "motion/react";
 import { Mail, ArrowRight } from "lucide-react";
+import { useTheme } from "../../contexts/ThemeContext";
+import { getIdentityTheme } from "../../data/identityThemes";
 
 export default function YuuKayCeeContact() {
+  const { mode } = useTheme();
+  const theme = getIdentityTheme("yuukaycee", mode);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        background: "#0C0A15",
+        background: "transparent",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -23,7 +28,7 @@ export default function YuuKayCeeContact() {
             fontSize: "0.65rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "#A78BFA",
+            color: theme.accent,
             marginBottom: "2rem",
           }}
         >
@@ -38,13 +43,13 @@ export default function YuuKayCeeContact() {
             fontFamily: "'Playfair Display', serif",
             fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
             fontWeight: 400,
-            color: "#EEE9F8",
+            color: theme.fg,
             lineHeight: 1.1,
             marginBottom: "2rem",
           }}
         >
           Let's make<br />
-          <em style={{ color: "#A78BFA" }}>something together</em>
+          <em style={{ color: theme.accent }}>something together</em>
         </motion.h1>
 
         <motion.p
@@ -53,9 +58,9 @@ export default function YuuKayCeeContact() {
           transition={{ duration: 0.8, delay: 0.2 }}
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: "0.95rem",
+            fontSize: "clamp(0.875rem, 2vw, 0.95rem)",
             lineHeight: 1.8,
-            color: "rgba(238,233,248,0.45)",
+            color: theme.fgMuted,
             marginBottom: "4rem",
           }}
         >
@@ -76,28 +81,28 @@ export default function YuuKayCeeContact() {
               alignItems: "center",
               gap: "1rem",
               textDecoration: "none",
-              color: "#EEE9F8",
+              color: theme.fg,
               padding: "1.5rem 2rem",
-              border: "1px solid rgba(167,139,250,0.15)",
+              border: `1px solid ${theme.borderSubtle}`,
               transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#A78BFA";
-              e.currentTarget.style.background = "rgba(167,139,250,0.05)";
+              e.currentTarget.style.borderColor = theme.accent;
+              e.currentTarget.style.background = mode === "dark" ? "rgba(103,232,249,0.04)" : "rgba(8,145,178,0.04)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(167,139,250,0.15)";
+              e.currentTarget.style.borderColor = theme.borderSubtle;
               e.currentTarget.style.background = "transparent";
             }}
           >
-            <Mail size={16} strokeWidth={1.5} color="#A78BFA" />
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem" }}>
+            <Mail size={16} strokeWidth={1.5} color={theme.accent} />
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(0.85rem, 1.8vw, 0.9rem)" }}>
               yuukaycee@udaycherri.com
             </span>
-            <ArrowRight size={14} strokeWidth={1.5} style={{ marginLeft: "auto" }} />
+            <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {["Behance", "Dribbble", "LinkedIn"].map((platform) => (
               <a
                 key={platform}
@@ -107,19 +112,19 @@ export default function YuuKayCeeContact() {
                   fontSize: "0.65rem",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  color: "rgba(238,233,248,0.4)",
+                  color: theme.fgMuted,
                   textDecoration: "none",
                   padding: "0.6rem 1.25rem",
-                  border: "1px solid rgba(167,139,250,0.12)",
+                  border: `1px solid ${theme.borderSubtle}`,
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#A78BFA";
-                  e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)";
+                  e.currentTarget.style.color = theme.accent;
+                  e.currentTarget.style.borderColor = theme.accent;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "rgba(238,233,248,0.4)";
-                  e.currentTarget.style.borderColor = "rgba(167,139,250,0.12)";
+                  e.currentTarget.style.color = theme.fgMuted;
+                  e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
                 {platform}
