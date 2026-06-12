@@ -26,14 +26,14 @@ function PortraitHero({ theme, mode }: { theme: ReturnType<typeof getIdentityThe
       {/* Portrait photograph */}
       <motion.img
         src="assets/images/yuukaycee-profile.png"
-        alt="Creative director portrait"
+        alt="YuuKayCee"
         variants={{ hover: { scale: 1.04 } }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover",
-          objectPosition: "center top",
+          objectFit: "contain",
+          objectPosition: "center",
           display: "block",
           filter: mode === "dark" ? "brightness(0.88) saturate(0.9)" : "brightness(0.96) saturate(0.85)",
         }}
@@ -347,42 +347,10 @@ export default function YuuKayCeeHome() {
                     el.style.background = project.coverColor + "18";
                   }}
                 >
-                  {/* Layered letterforms */}
-                  <div
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "10rem",
-                      color: project.coverColor,
-                      opacity: 0.07,
-                      userSelect: "none",
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                    }}
-                  >
-                    {project.title.slice(0, 1)}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "5rem",
-                      color: project.coverColor,
-                      opacity: 0.15,
-                      userSelect: "none",
-                      position: "absolute",
-                      top: "30%",
-                      right: "10%",
-                    }}
-                  >
-                    {project.title.slice(0, 2)}
-                  </div>
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: `radial-gradient(ellipse at 50% 30%, ${project.coverColor}18 0%, transparent 70%)`,
-                    }}
+                  <img
+                    src="/assets/images/nyxbureau-logo.png"
+                    alt={project.title}
+                    style={{ maxWidth: "55%", maxHeight: "55%", objectFit: "contain", position: "relative", zIndex: 1 }}
                   />
                 </div>
                 <div style={{ padding: "0 0.5rem 2rem" }}>

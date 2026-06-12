@@ -77,7 +77,7 @@ export default function SpyContact() {
           style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         >
           <a
-            href="mailto:spy@udaycherri.com"
+            href="mailto:spyd.veloper@gmail.com"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -99,16 +99,21 @@ export default function SpyContact() {
           >
             <Mail size={14} strokeWidth={1.5} color={theme.accent} />
             <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: "clamp(0.8rem, 1.6vw, 0.875rem)" }}>
-              spy@udaycherri.com
+              spyd.veloper@gmail.com
             </span>
             <ArrowRight size={12} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            {["GitHub", "Twitter"].map((platform) => (
+            {[
+              { label: "GitHub", url: "https://github.com/udaycherri" },
+              { label: "Twitter", url: "https://x.com/udaycherri" },
+            ].map(({ label, url }) => (
               <a
-                key={platform}
-                href="#"
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   fontFamily: "'Space Grotesk', sans-serif",
                   fontSize: "0.65rem",
@@ -130,7 +135,7 @@ export default function SpyContact() {
                   e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
-                {platform}
+                {label}
               </a>
             ))}
           </div>

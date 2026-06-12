@@ -75,7 +75,7 @@ export default function YuuKayCeeContact() {
           style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         >
           <a
-            href="mailto:yuukaycee@udaycherri.com"
+            href="mailto:yuukaycee@nyxbureau.com"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -97,16 +97,22 @@ export default function YuuKayCeeContact() {
           >
             <Mail size={16} strokeWidth={1.5} color={theme.accent} />
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(0.85rem, 1.8vw, 0.9rem)" }}>
-              yuukaycee@udaycherri.com
+              yuukaycee@nyxbureau.com
             </span>
             <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            {["Behance", "Dribbble", "LinkedIn"].map((platform) => (
+            {[
+              { label: "Behance", url: "https://behance.net/udaycherri" },
+              { label: "Dribbble", url: "https://dribbble.com/udaycherri" },
+              { label: "LinkedIn", url: "https://linkedin.com/in/udaycherri" },
+            ].map(({ label, url }) => (
               <a
-                key={platform}
-                href="#"
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.65rem",
@@ -127,7 +133,7 @@ export default function YuuKayCeeContact() {
                   e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
-                {platform}
+                {label}
               </a>
             ))}
           </div>

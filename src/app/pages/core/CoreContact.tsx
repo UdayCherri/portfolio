@@ -85,7 +85,7 @@ export default function CoreContact() {
             style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
           >
             <a
-              href="mailto:uday@udaycherri.com"
+              href="mailto:cherriuday@gmail.com"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -113,16 +113,22 @@ export default function CoreContact() {
                   letterSpacing: "0.05em",
                 }}
               >
-                uday@udaycherri.com
+                cherriuday@gmail.com
               </span>
               <ArrowRight size={14} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
             </a>
 
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              {["GitHub", "LinkedIn", "Twitter"].map((platform) => (
+              {[
+                { label: "GitHub", url: "https://github.com/udaycherri" },
+                { label: "LinkedIn", url: "https://linkedin.com/in/udaycherri" },
+                { label: "Twitter", url: "https://x.com/udaycherri" },
+              ].map(({ label, url }) => (
                 <a
-                  key={platform}
-                  href="#"
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     fontFamily: "'Inter', sans-serif",
                     fontSize: "0.65rem",
@@ -143,7 +149,7 @@ export default function CoreContact() {
                     e.currentTarget.style.borderColor = theme.borderSubtle;
                   }}
                 >
-                  {platform}
+                  {label}
                 </a>
               ))}
             </div>

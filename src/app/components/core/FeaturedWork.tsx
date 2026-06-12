@@ -6,7 +6,7 @@ import { useIsDesktop } from "../shared/useMediaQuery";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getIdentityTheme } from "../../data/identityThemes";
 
-// YuuKayCee editorial cover — prismatic light, layered typographic letterforms
+// YuuKayCee editorial cover — NYX Bureau logo
 function YuuKayCeeCover() {
   return (
     <div
@@ -16,67 +16,16 @@ function YuuKayCeeCover() {
         background: "#080A12",
         position: "relative",
         overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      {/* Prismatic radial blobs */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: [
-            "radial-gradient(ellipse 70% 55% at 20% 35%, rgba(103,232,249,0.2) 0%, transparent 70%)",
-            "radial-gradient(ellipse 55% 45% at 75% 18%, rgba(45,212,191,0.14) 0%, transparent 70%)",
-            "radial-gradient(ellipse 50% 40% at 85% 75%, rgba(244,114,182,0.1) 0%, transparent 70%)",
-            "radial-gradient(ellipse 45% 35% at 50% 60%, rgba(196,181,253,0.08) 0%, transparent 70%)",
-            "radial-gradient(ellipse 40% 30% at 65% 85%, rgba(251,191,36,0.08) 0%, transparent 70%)",
-          ].join(", "),
-        }}
+      <img
+        src="/assets/images/nyxbureau-logo.png"
+        alt="NYX Bureau"
+        style={{ maxWidth: "55%", maxHeight: "55%", objectFit: "contain", position: "relative", zIndex: 1 }}
       />
-      {/* Layered "Y" letterforms */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-10%",
-          left: "-8%",
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "18rem",
-          color: "rgba(103,232,249,0.06)",
-          userSelect: "none",
-          lineHeight: 1,
-        }}
-      >
-        Y
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "15%",
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "12rem",
-          color: "rgba(103,232,249,0.1)",
-          userSelect: "none",
-          lineHeight: 1,
-        }}
-      >
-        K
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          bottom: "5%",
-          right: "8%",
-          fontFamily: "'Playfair Display', serif",
-          fontSize: "7rem",
-          color: "rgba(45,212,191,0.22)",
-          userSelect: "none",
-          lineHeight: 1,
-          letterSpacing: "-0.05em",
-        }}
-      >
-        YK
-      </div>
-      {/* Gradient fade bottom */}
       <div
         style={{
           position: "absolute",

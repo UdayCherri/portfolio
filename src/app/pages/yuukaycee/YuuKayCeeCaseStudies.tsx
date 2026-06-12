@@ -94,17 +94,11 @@ export default function YuuKayCeeCaseStudies() {
                     flexShrink: 0,
                   }}
                 >
-                  <span
-                    style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "3.5rem",
-                      color: project.coverColor,
-                      opacity: 0.12,
-                      userSelect: "none",
-                    }}
-                  >
-                    {project.title.slice(0, 2)}
-                  </span>
+                  <img
+                    src="/assets/images/nyxbureau-logo.png"
+                    alt={project.title}
+                    style={{ maxWidth: "70%", maxHeight: "70%", objectFit: "contain" }}
+                  />
                 </div>
                 <div style={{ flex: 1, minWidth: "200px" }}>
                   <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "0.75rem" }}>

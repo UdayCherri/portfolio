@@ -75,7 +75,7 @@ export default function CyberContact() {
           style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
         >
           <a
-            href="mailto:cyb3r@udaycherri.com"
+            href="mailto:cyb3rbo1@scr1ptk1dd13s.xyz"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -97,16 +97,22 @@ export default function CyberContact() {
           >
             <Mail size={14} strokeWidth={1.5} color={theme.accent} />
             <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "clamp(0.75rem, 1.5vw, 0.8rem)" }}>
-              cyb3r@udaycherri.com
+              cyb3rbo1@scr1ptk1dd13s.xyz
             </span>
             <ArrowRight size={12} strokeWidth={1.5} color={theme.fgMuted} style={{ marginLeft: "auto" }} />
           </a>
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            {["GitHub", "Keybase", "HackTheBox"].map((platform) => (
+            {[
+              { label: "GitHub", url: "https://github.com/udaycherri" },
+              { label: "Keybase", url: "https://keybase.io/udaycherri" },
+              { label: "HackTheBox", url: "https://app.hackthebox.com/profile/udaycherri" },
+            ].map(({ label, url }) => (
               <a
-                key={platform}
-                href="#"
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   fontFamily: "'IBM Plex Mono', monospace",
                   fontSize: "0.65rem",
@@ -126,7 +132,7 @@ export default function CyberContact() {
                   e.currentTarget.style.borderColor = theme.borderSubtle;
                 }}
               >
-                {platform}
+                {label}
               </a>
             ))}
           </div>

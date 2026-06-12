@@ -34,14 +34,11 @@ function CategoryCover({ category, coverColor }: { category: string; coverColor:
   if (category === "Branding") {
     return (
       <div style={baseStyle} className="yk-card-cover">
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity={0.6}>
-          <circle cx="60" cy="60" r="50" stroke={coverColor} strokeWidth="0.75" />
-          <circle cx="60" cy="60" r="36" stroke={coverColor} strokeWidth="0.5" opacity={0.7} />
-          <circle cx="60" cy="60" r="22" stroke={coverColor} strokeWidth="0.75" opacity={0.5} />
-          <circle cx="60" cy="60" r="8" fill={coverColor} opacity={0.3} />
-          <line x1="60" y1="10" x2="60" y2="110" stroke={coverColor} strokeWidth="0.5" opacity={0.3} />
-          <line x1="10" y1="60" x2="110" y2="60" stroke={coverColor} strokeWidth="0.5" opacity={0.3} />
-        </svg>
+        <img
+          src="/assets/images/nyxbureau-logo.png"
+          alt="NYX Bureau"
+          style={{ maxWidth: "55%", maxHeight: "55%", objectFit: "contain", position: "relative", zIndex: 1 }}
+        />
         <div
           style={{
             position: "absolute",
