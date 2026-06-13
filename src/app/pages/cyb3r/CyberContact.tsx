@@ -104,9 +104,12 @@ export default function CyberContact() {
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {[
-              { label: "GitHub", url: "https://github.com/udaycherri" },
-              { label: "Keybase", url: "https://keybase.io/udaycherri" },
-              { label: "HackTheBox", url: "https://app.hackthebox.com/profile/udaycherri" },
+              { label: "GitHub", url: "https://github.com/CYB3R-BO1" },
+              { label: "Twitter", url: "https://x.com/CYB3R_BO1" },
+              { label: "HackerOne", url: "https://hackerone.com/cyb3r_bo1" },
+              { label: "HackTheBox", url: "https://app.hackthebox.com/profile/cyb3r_bo1" },
+              { label: "TryHackMe", url: "https://tryhackme.com/p/CYB3RBO1" },
+              { label: "Instagram", url: "https://www.instagram.com/the_cyb3r_bo1/" },
             ].map(({ label, url }) => (
               <a
                 key={label}

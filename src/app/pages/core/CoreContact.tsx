@@ -120,9 +120,10 @@ export default function CoreContact() {
 
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               {[
-                { label: "GitHub", url: "https://github.com/udaycherri" },
-                { label: "LinkedIn", url: "https://linkedin.com/in/udaycherri" },
-                { label: "Twitter", url: "https://x.com/udaycherri" },
+                { label: "GitHub", url: "https://github.com/UdayCherri" },
+                { label: "LinkedIn", url: "https://linkedin.com/in/uday-kiran-cherri" },
+                { label: "Twitter", url: "https://x.com/Uday_Cherri" },
+                { label: "Instagram", url: "https://www.instagram.com/uday.cherri/" },
               ].map(({ label, url }) => (
                 <a
                   key={label}

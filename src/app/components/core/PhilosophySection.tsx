@@ -52,10 +52,10 @@ export function PhilosophySection() {
               letterSpacing: "-0.01em",
             }}
           >
-            Building across worlds.
+            Carpe diem. 
             <br />
             <span style={{ color: theme.fgMuted, fontStyle: "italic" }}>
-              Growing beyond them.
+               Seize the day.
             </span>
           </motion.p>
         </div>

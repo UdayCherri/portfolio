@@ -104,9 +104,7 @@ export default function YuuKayCeeContact() {
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {[
-              { label: "Behance", url: "https://behance.net/udaycherri" },
-              { label: "Dribbble", url: "https://dribbble.com/udaycherri" },
-              { label: "LinkedIn", url: "https://linkedin.com/in/udaycherri" },
+              { label: "Twitter", url: "https://x.com/YuuKaycee" },
             ].map(({ label, url }) => (
               <a
                 key={label}

@@ -268,7 +268,7 @@ export default function CoreHome() {
             opacity: 0.6,
           }}
         >
-          2024
+          2026
         </p>
       </div>
     </div>

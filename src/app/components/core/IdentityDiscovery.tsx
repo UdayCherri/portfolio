@@ -11,7 +11,7 @@ const identities = [
     id: "yuukaycee",
     path: "/yuukaycee",
     name: "YuuKayCee",
-    archetype: "The Prism",
+    archetype: "The Architect",
     motto: "Designing connections between people, ideas, and worlds.",
     discipline: "Design",
     bg: "#080A12",
@@ -28,7 +28,7 @@ const identities = [
   },
   {
     id: "spy",
-    path: "/spy",
+    path: "/spyd-veloper",
     name: "Spy D. Veloper",
     archetype: "The Builder",
     motto: "Creating systems that move the future forward.",
@@ -47,7 +47,7 @@ const identities = [
   },
   {
     id: "cyb3r",
-    path: "/cyb3r",
+    path: "/cyb3r-bo1",
     name: "CYB3R-BO1",
     archetype: "The Researcher",
     motto: "Security begins with understanding.",

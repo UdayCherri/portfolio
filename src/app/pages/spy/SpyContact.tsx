@@ -106,8 +106,9 @@ export default function SpyContact() {
 
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             {[
-              { label: "GitHub", url: "https://github.com/udaycherri" },
-              { label: "Twitter", url: "https://x.com/udaycherri" },
+              { label: "GitHub", url: "https://github.com/Spy-D-Veloper" },
+              { label: "Twitter", url: "https://x.com/SpyD_Veloper" },
+              { label: "Instagram", url: "https://www.instagram.com/spyd.veloper/" },
             ].map(({ label, url }) => (
               <a
                 key={label}

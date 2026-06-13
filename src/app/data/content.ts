@@ -2,10 +2,10 @@
 
 export const udayProfile = {
   name: "Uday Cherri",
-  archetype: "The Architect",
-  motto: "Building across worlds. Growing beyond them.",
+  archetype: "The Founder",
+  motto: "You can do it too!",
   introduction:
-    "A multidisciplinary creator working at the intersection of design, engineering, and security. Not defined by a single discipline — defined by the connections between them.",
+    "Medicine, law, business, engineering, these are noble pursuits and necessary to sustain life. But poetry, beauty, romance, love, these are what we stay alive for.",
   beliefs: [
     { statement: "Mastery is found at intersections.", index: "01" },
   ],
@@ -14,20 +14,34 @@ export const udayProfile = {
 export const journeyMilestones = [
   {
     id: "m1",
+    year: "2026",
+    title: "NYX BUREAU",
+    note: "Studio founded",
+    discipline: "design",
+  },
+  {
+    id: "m2",
+    year: "2026",
+    title: "TryHackMe",
+    note: "Top 6%",
+    discipline: "security",
+  },
+  {
+    id: "m3",
     year: "2024",
-    title: "DEF CON CTF Qualifier",
-    note: "Top 15%",
+    title: "Crack-In CTF 1.0",
+    note: "Ranked 2nd",
     discipline: "security",
   },
 ];
 
 export const currentFocus = [
   {
-    id: "level",
-    name: "LEVEL",
-    category: "Product",
-    status: "Building",
-    accent: "#B8A46A",
+    id: "nyxbureau",
+    name: "NYX BUREAU",
+    category: "STUDIO",
+    status: "Active",
+    accent: "#67E8F9",
   },
 ];
 
